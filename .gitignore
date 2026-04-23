@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+
+logseq/bak/
+logseq/.recycle/
+logseq/version-files/
+
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.temp
+
+.env
+.env.*
+!.env.example

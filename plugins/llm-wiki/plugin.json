@@ -1,0 +1,9 @@
+{
+  "id": "logseq-llm-wiki",
+  "name": "LLM Wiki",
+  "version": "0.1.0",
+  "description": "Compile Logseq notes into a self-linking LLM Wiki.",
+  "main": "dist/index.html",
+  "author": "AI knowledge engineering team",
+  "license": "MIT"
+}

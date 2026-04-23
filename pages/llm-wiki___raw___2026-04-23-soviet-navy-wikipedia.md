@@ -1,0 +1,280 @@
+knowledge-layer:: raw
+source-url:: https://en.wikipedia.org/wiki/Soviet_Navy
+collected:: 2026-04-23
+published:: Unknown
+
+- Source: https://en.wikipedia.org/wiki/Soviet_Navy
+- [Content truncated for analysis.]
+- A distinctive feature of Soviet aircraft carriers has been their offensive missile armament (as well as long-range anti-aircraft warfare armament), again representing a fleet-defense operational concept, in distinction to the Western emphasis on shore-strike missions from distant deployment. A second carrier (pre-commissioning name Varyag ) was under construction when the Soviet Union disintegrated in 1991. Construction stopped and the ship was sold later
+- In 1981, the Soviet Navy ordered its first true aircraft carrier, Tbilisi , subsequently renamed Admiral of the Fleet of the Soviet Union Kuznetsov , &#91; 17 &#93; which carries Sukhoi Su-33 'Flanker-D' and MiG-29 fighters, as well as Ka-27 helicopters.
+- During the 1970s the Soviets began Project 1153 Orel (Eagle), whose stated purpose was to create an aircraft carrier capable of basing fixed-wing fighter aircraft in defense of the deployed fleet. The project was canceled during the planning stages when strategic priorities shifted once more.
+- The Soviet Navy still had the mission of confronting Western submarines, creating a need for large surface vessels to carry anti-submarine helicopters. During 1968 and 1969 the Moskva -class helicopter carriers were first deployed, succeeded by the first of four aircraft-carrying cruisers of the Kiev class , in 1973. Both types were capable of operating ASW helicopters, and the Kiev class also operated V/STOL aircraft ( e.g. , the Yak-38 'Forger' ); they were designed to operate for fleet defense, primarily within range of land-based Soviet Naval Aviation aircraft.
+- In the strategic planning laid by the Soviet strategists, the aircraft carriers were seen as relatively unimportant and received little attention, as Moscow focused on a naval strategy designed to disrupt sea lines of communication . Nonetheless, the Soviet navy pursued an aircraft carrier program as a way of matching stoking competition with the U.S. Navy . &#91; 14 &#93;
+- The Russian aircraft carrier&#160; Admiral Kuznetsov deployed off the coast of Italy , as seen patrolling with USS&#160; Deyo in 1991
+- Kiev , an aviation cruiser , and the rest of her class constituted an important component of the Soviet anti-submarine warfare system
+- [ edit ]
+- Carriers and aviation
+- The 5th Operational Squadron ( ru:5-я Средиземноморская эскадра кораблей ВМФ ) &#91; 16 &#93; operated in the Mediterranean Sea . The squadron's main function was to prevent largescale naval ingress into the Black Sea , which could bypass the need for any invasion to be over the Eurasian land mass. &#91; 14 &#93; The flagship of the squadron was for a long period the Sverdlov -class cruiser Zhdanov .
+- The Soviets were quick to equip their surface fleet with missiles of various sorts. Indeed, it became a feature of Soviet design to place large missiles onto relatively small, but fast, missile boats , while in the West such an approach would never have been considered tactically feasible. The Soviet Navy did also possess several very large and well-armed guided-missile cruisers , like those of the Kirov and Slava classes. By the 1970s, Soviet submarine technology was in some respects more advanced than in the West, and several of their submarine types were considered superior to their American rivals. &#91; 15 &#93;
+- The Soviet Navy was structured around submarines and small, maneuverable, tactical vessels. &#91; 14 &#93; The Soviet shipbuilding program kept yards busy constructing submarines based upon World War II German Kriegsmarine designs , which were launched with great frequency during the immediate post-war years. Afterwards, through a combination of indigenous research and technology obtained through espionage from Nazi Germany and the Western nations, the Soviets gradually improved their submarine designs.
+- In February 1946, the Red Fleet was renamed and became known as the Soviet Navy ( Russian : Советский Военно-Морской Флот , romanized :&#160; Sovyetsky Voyenno-Morskoy Flot , lit. &#8201; ' Soviet Military Maritime Fleet ' ). &#91; 13 &#93; After the war, the Soviets concluded that they needed a navy that could disrupt supply lines , and display a small naval presence to the developing world. &#91; 14 &#93; As the natural resources the Soviet Union needed were available on the Eurasian landmass, it did not need a navy to protect a large commercial fleet, as the western navies were configured to do. &#91; 14 &#93; Later, countering seaborne nuclear delivery systems became another significant objective of the navy, and an impetus for expansion. &#91; 14 &#93;
+- Soviet Navy enlisted personnel stand at attention (1982)
+- [ edit ]
+- Cold War (1945–1991)
+- As post-war spoils, the Soviets received several Italian and Japanese warships and much German naval engineering and architectural documentation.
+- From the beginning of hostilities, Soviet Naval Aviation provided air support to naval and land operations involving the Soviet Navy. This service was responsible for the operation of shore-based floatplanes , long-range flying boats , catapult-launched and vessel-based planes, and land-based aircraft designated for naval use.
+- In the Black Sea, many ships were damaged by minefields and Axis aviation , but they helped defend naval bases and supply them while besieged, as well as later evacuating them. Heavy naval guns and sailors helped defend port cities during long sieges by Axis armies . In the Arctic Ocean, Soviet Northern Fleet destroyers ( Novik class, Type 7, and Type 7U) and smaller craft participated with the anti-aircraft and anti-submarine defence of Allied convoys conducting Lend-Lease cargo shipping. In the Pacific Ocean, the Soviet Union was not at war with Japan before 1945, so some destroyers were transferred to the Northern Fleet. &#91; 10 &#93;
+- In the Baltic Sea, after Tallinn 's capture, surface ships were blockaded in Leningrad and Kronstadt by minefields, where they participated with the anti-aircraft defence of the city and bombarded German positions. One example of Soviet resourcefulness was the battleship Marat , an ageing pre-World War I ship sunk at anchor in Kronstadt's harbour by German Junkers Ju 87 aircraft in 1941. For the rest of the war, the non-submerged part of the ship remained in use as a grounded battery. Submarines, although suffering great losses due to German and Finnish anti-submarine actions, had a major role in the war at sea by disrupting Axis navigation in the Baltic Sea.
+- Pacific Fleet marines of the Soviet Navy hoisting the Soviet naval ensign in Port Arthur , on 1 October 1945
+- Included in the totals above are some pre-World War I ships ( Novik -class destroyers, some of the cruisers, and all the battleships), some modern ships built in the USSR and Europe (like the Italian-built destroyer Tashkent &#91; 12 &#93; and the partially completed German cruiser Lützow ). During the war, many of the vessels on the slips in Leningrad and Nikolayev were destroyed (mainly by aircraft and mines ), but the Soviet Navy received captured Romanian destroyers and Lend-Lease small craft from the U.S., as well as the old Royal Navy battleship HMS&#160; Royal Sovereign (renamed Arkhangelsk ) and the United States Navy cruiser USS&#160; Milwaukee (renamed Murmansk ) in exchange for the Soviet part of the captured Italian navy.
+- In various stages of completion were another 219 vessels including 3 battleships, 2 heavy and 7 light cruisers, 45 destroyers, and 91 submarines.
+- and a range of other smaller vessels.
+- 77 submarine chasers ,
+- 88 minesweepers,
+- 22 patrol vessels,
+- 269 torpedo boats,
+- 218 submarines,
+- 59 destroyers (including 46 modern Gnevny -class and Soobrazitelny -class destroyers),
+- 7 cruisers
+- 3 battleships,
+- The composition of the Soviet fleets in 1941 included: &#91; 11 &#93;
+- Soviet souvenir naval cap
+- When the Soviet Union entered the Second World War, during Operation Barbarossa in June 1941, initially millions of soldiers were captured, many sailors and naval guns were detached to reinforce the Red Army ; these reassigned naval forces had especially significant roles on land in the battles for Odessa , Sevastopol , Stalingrad , Novorossiysk , Tuapse , and Leningrad . The Baltic fleet was blockaded in Leningrad and Kronstadt by minefields, but the submarines escaped. The surface fleet fought with the anti-aircraft defence of the city and bombarded German positions. &#91; 10 &#93;
+- Building a Soviet fleet was a national priority, but many senior officers were killed in the Great Purge in the late 1930s. &#91; 8 &#93; The naval share of the national armaments budget fell from 11.5% in 1941 to 6.6% in 1944. &#91; 9 &#93;
+- Main articles: Baltic Sea campaigns (1939–45) and Black Sea campaigns (1941–44)
+- [ edit ]
+- World War II: The Great Patriotic War (1941–1945)
+- The Soviet Navy had some minor action in the Winter War against Finland in 1939–1940, on the Baltic Sea. It was limited mainly to cruisers and battleships fighting artillery duels with Finnish forts. &#91; citation needed &#93;
+- By the end of 1937, the biggest fleet was the Baltic Fleet based at Leningrad, with two battleships, one training cruiser, eight destroyers including one destroyer leader, five patrol ships, two minesweepers , and some more old minesweepers. &#91; 7 &#93; The Black Sea Fleet at Sevastopol included one battleship, three cruisers, one training cruiser, five destroyers, two patrol ships, and four minesweepers. The Northern Fleet operating from the shores of Kola Bay and Polyarny was made up of three destroyers and three patrol ships, while the Pacific Fleet had two destroyers, transferred east in 1936, and six patrol ships assembled in the Far East.
+- In subsequent years, 133 submarines were built to designs developed during Malinin's management. Additional developments included the formation of the Pacific Fleet in 1932 and the Northern Fleet in 1933. &#91; 6 &#93; The forces were to be built around a core of powerful Sovetsky Soyuz -class battleships . This building program was only in its initial stages by the time the German invasion forced its suspension in 1941.
+- During the 1930s, as the industrialization of the Soviet Union proceeded, plans were made to expand the Soviet Navy into one of the most powerful in the world. Approved by the Labour and Defence Council in 1926, the Naval Shipbuilding Program included plans to construct twelve submarines; the first six were to become known as the Dekabrist class . &#91; 5 &#93; Beginning 4&#160;November 1926, Technical Bureau Nº 4 (formerly the Submarine Department, and still secret), under the leadership of B.M. Malinin , managed the submarine construction works at the Baltic Shipyard . &#91; 5 &#93;
+- [ edit ]
+- Interwar period (1922–1941)
+- In the Baltic Sea there remained only three much-neglected battleships, two cruisers, some ten destroyers, and a few submarines. Despite this state of affairs, the Baltic Fleet remained a significant naval formation, and the Black Sea Fleet also provided a basis for expansion. There also existed some thirty minor-waterways combat flotillas.
+- American, Japanese, French, Italian. The greater part of the old fleet was sold by the Soviet government to post-war Germany for scrap.
+- As the country's attentions were largely directed internally, the Navy did not have much funding or training. An indicator of its reputation was that the Soviets were not invited to participate in negotiations for the Washington Naval Treaty of 1921–1922, which limited the size and capabilities of the most powerful navies – British,
+- The Soviet Navy, established as the " Workers' and Peasants' Red Fleet " &#91; c &#93; by a 1918 decree of the new Council of People's Commissars , installed as a temporary Russian revolutionary government, was less than service-ready during the interwar years of 1918 to 1941.
+- The first ship of the revolutionary navy could be considered the rebellious Imperial Russian cruiser Aurora , built 1900, whose crew joined the communist Bolsheviks. Sailors of the Baltic fleet supplied the fighting force of the Bolsheviks led by Vladimir Lenin and Leon Trotsky during the October Revolution of November 1917 against the democratic provisional government of Alexander Kerensky established after the earlier first revolution of February against the Czar . Some imperial vessels continued to serve after the revolution, albeit with different names.
+- When the opposing Czarist White Army captured Crimea in 1919, it captured and reconditioned a few units. At the end of the civil war, Wrangel's fleet , a White flotilla, moved south through the Black Sea, Dardanelles straits and the Aegean Sea to the Mediterranean Sea to Bizerta in French Tunisia on the North Africa coast, where it was interned.
+- The ships remaining in Sevastopol were captured by the Germans and then, after the later Armistice of 11 November 1918 on the Western Front which ended the War, additional Russian ships were confiscated by the British. On 1&#160;April 1919, during the ensuing Russian Civil War when Red Army forces captured Crimea , the British Royal Navy squadron had to withdraw, but before leaving they damaged all the remaining battleships and sank thirteen new submarines.
+- The Black Sea Fleet fared no better than the Baltic . The Bolshevik (Communist) revolution entirely disrupted its personnel, with mass murders of officers; the ships were allowed to decay to unserviceability. At the end of April 1918, Imperial German troops moved along the Black Sea coast and entered Crimea and started to advance towards the Sevastopol naval base. The more effective ships were moved from Sevastopol to Novorossiysk where, after an ultimatum from Germany, they were scuttled by Vladimir Lenin 's order.
+- The Soviet Navy was based on a republican naval force formed from the remnants of the Imperial Russian Navy , which had been almost completely destroyed in the two Revolutions of 1917 (the February and October Revolutions), during World War&#160;I (1914–1918), the following Russian Civil War (1917–1922), and the Kronstadt rebellion in 1921. During the revolutionary period, Russian sailors deserted their ships at will and generally neglected their duties. The officers were dispersed (some were killed by the Red Terror , some joined the " White " (anti-communist) opposing armies, and others simply resigned) and most of the sailors walked off and left their ships. Work stopped in the shipyards, where uncompleted ships deteriorated rapidly.
+- Aurora was unofficially the first Soviet Navy ship, after it mutinied against the Russian Provisional Government of Alexander Kerensky in the 1917 October Revolution
+- [ edit ]
+- Russian Civil War (1917–1922)
+- [ edit ]
+- Early history
+- The Soviet Navy was formed from the remnants of the Imperial Russian Navy during the Russian Civil War . After the dissolution of the Soviet Union in 1991, the Russian Federation inherited the largest part of the Soviet Navy and reformed it into the Russian Navy , with smaller parts becoming the basis for navies of the newly independent post-Soviet states .
+- The Soviet Navy was divided into four major fleets: the Northern , Pacific , Black Sea , and Baltic Fleets, in addition to the Leningrad Naval Base , which was commanded separately. It also had a smaller force, the Caspian Flotilla , which operated in the Caspian Sea and was followed by a larger fleet, the 5th Squadron , in the Mediterranean Sea . The Soviet Navy included Naval Aviation , Naval Infantry , and the Coastal Artillery .
+- The Soviet Navy ( Russian : Военно-морской флот (ВМФ) СССР , romanized :&#160; Voyenno-morskoy flot (VMF) SSSR ) was the naval warfare uniform service branch of the Soviet Armed Forces . Often referred to as the Red Fleet , &#91; b &#93; the Soviet Navy made up a large part of the Soviet Union 's strategic planning in the event of a conflict with the opposing superpower , the United States , during the Cold War (1945–1991). &#91; 3 &#93; The Soviet Navy played a large role during the Cold War, either confronting the North Atlantic Treaty Organization in western Europe or power projection to maintain its sphere of influence in eastern Europe . &#91; 4 &#93;
+- e
+- t
+- v
+- History of Russian military ranks
+- Military history of the Soviet Union
+- History of the Soviet Military
+- Military ranks of the Soviet Union
+- Ranks of the Soviet Military
+- Airborne Forces
+- Navy
+- Air Forces
+- Air Defence Forces
+- Soviet Army
+- Red Army
+- Strategic Rocket Forces
+- General Staff
+- Components
+- Soviet Armed Forces
+- Insignia Naval jack Guards Red Banner naval ensign Military unit
+- Admiral Ivan Yumashev
+- Fleet Admiral Vasili Altfater
+- Vice Admiral Yevgeny Berens
+- Vice Admiral Aleksandr Nemits
+- Fleet Admiral USSR Nikolay Kuznetsov
+- Commanders Notable commanders Fleet Admiral USSR Sergey Gorshkov
+- Cold War
+- Vietnam War
+- Soviet invasion of Manchuria
+- World War II ( Great Patriotic War )
+- Winter War ( Finland )
+- Invasion of Poland
+- Soviet–Japanese border conflicts
+- Polish–Soviet War
+- Russian Civil War
+- Part&#160;of Soviet Armed Forces Nickname Red Fleet March If You'll be Lucky Engagements Russian Revolution
+- 1 Lun-class ekranoplan
+- 425 patrol boats
+- 35 amphibious warfare ships
+- 9 auxiliary submarines
+- 63 conventional attack submarine
+- 68 nuclear attack submarine
+- 72 cruise missile submarine
+- 63 ballistic missile submarines
+- 124 corvettes
+- 113 frigates
+- 45 destroyers
+- 30 cruisers
+- 3 battlecruisers
+- 2 helicopter carriers (1990)
+- 5 aircraft carriers (1990)
+- 1,172 aircraft (1990)
+- 1,057 ships (1990)
+- Type Navy Size 467,000 personnel (1984) &#91; 2 &#93;
+- CIS (1991–1992)
+- Soviet Union (1922–1991)
+- Founded 11 February&#160;&#91; O.S. 29 January&#93;&#160;1918 &#160;( 1918-02-11 ) &#91; a &#93; Disbanded 14&#160;February&#160;1992 &#160;( 1992-02-14 ) Country &#160; Russian SFSR (1918–1922)
+- Soviet Navy Военно-морской флот СССР Naval ensign of the Soviet Union
+- Maritime service branch of the Soviet Armed Forces
+- From Wikipedia, the free encyclopedia
+- hide
+- move to sidebar
+- Appearance
+- Wikidata item
+- Wikimedia Commons
+- In other projects
+- Printable version
+- Download as PDF
+- Print/export
+- Get shortened URL
+- Cite this page
+- Page information
+- Permanent link
+- Upload file
+- Related changes
+- What links here
+- General
+- View history
+- Edit
+- Read
+- Actions
+- hide
+- move to sidebar
+- Tools
+- Tools
+- View history
+- Edit
+- Read
+- English
+- Talk
+- Article
+- Edit links
+- 中文
+- Tiếng Việt
+- اردو
+- Українська
+- Türkçe
+- ไทย
+- Svenska
+- Српски / srpski
+- Slovenščina
+- Simple English
+- Srpskohrvatski / српскохрватски
+- Русский
+- Română
+- Português
+- Polski
+- Norsk bokmål
+- Nederlands
+- Bahasa Melayu
+- Latviešu
+- 한국어
+- 日本語
+- Italiano
+- Bahasa Indonesia
+- Magyar
+- עברית
+- Français
+- Suomi
+- فارسی
+- Euskara
+- Eesti
+- Español
+- Ελληνικά
+- Deutsch
+- Dansk
+- Čeština
+- Català
+- Brezhoneg
+- বাংলা
+- Беларуская
+- Беларуская (тарашкевіца)
+- Башҡортса
+- العربية
+- 42 languages
+- Soviet Navy
+- Toggle the table of contents
+- External links
+- 9
+- Bibliography
+- 8
+- References
+- 7
+- Notes
+- 6
+- See also
+- 5
+- Chiefs of the General Staff of the Navy
+- 4.2
+- Commanders of the Naval Forces
+- 4.1
+- Toggle Heads of the Soviet Naval Forces subsection
+- Heads of the Soviet Naval Forces
+- 4
+- Naval Infantry
+- 3.5
+- Soviet Naval Aviation
+- 3.4
+- Transition
+- 3.3
+- Submarines
+- 3.2
+- Carriers and aviation
+- 3.1
+- Toggle Cold War (1945–1991) subsection
+- Cold War (1945–1991)
+- 3
+- World War II: The Great Patriotic War (1941–1945)
+- 2
+- Interwar period (1922–1941)
+- 1.2
+- Russian Civil War (1917–1922)
+- 1.1
+- Toggle Early history subsection
+- Early history
+- 1
+- (Top)
+- hide
+- move to sidebar
+- Contents
+- Log in
+- Create account
+- Donate
+- Personal tools
+- Log in
+- Create account
+- Donate
+- Appearance
+- Search
+- Search
+- Special pages
+- Upload file
+- Recent changes
+- Community portal
+- Learn to edit
+- Help
+- Contribute
+- Contact us
+- About Wikipedia
+- Random article
+- Current events
+- Contents
+- Main page
+- Navigation
+- hide
+- move to sidebar
+- Main menu
+- Main menu
+- Jump to content
+- Soviet Navy - Wikipedia
+- Published: Unknown
+- Collected: 2026-04-23
