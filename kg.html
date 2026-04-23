@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Graph - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+    <script src="https://unpkg.com/force-graph"></script>
+  </head>
+  <body>
+    <div class="shell shell-wide">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="graph-content">
+        <div id="graph"></div>
+      </main>
+    </div>
+    <script>
+      fetch("./data.json")
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          ForceGraph()(document.getElementById("graph"))
+            .height(window.innerHeight - 88)
+            .nodeCanvasObject(function(node, ctx, globalScale) {
+              var fontSize = 14 / globalScale;
+              ctx.font = fontSize + "px Sans-Serif";
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.fillStyle = node.color || "#2f6f73";
+              ctx.beginPath();
+              ctx.arc(node.x, node.y - 5, Math.max(node.val || 4, 4), 0, 2 * Math.PI, false);
+              ctx.fill();
+              ctx.fillStyle = "#1b1f23";
+              ctx.fillText(node.name, node.x, node.y + 10);
+            })
+            .onNodeClick(function(node) { window.location.href = node.name + ".html"; })
+            .linkDirectionalArrowLength(5)
+            .graphData(data);
+        });
+    </script>
+  </body>
+</html>
