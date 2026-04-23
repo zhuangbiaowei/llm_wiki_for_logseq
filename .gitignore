@@ -1,6 +1,8 @@
 node_modules/
 dist/
 coverage/
+site/
+.bundle/
 
 logseq/bak/
 logseq/.recycle/

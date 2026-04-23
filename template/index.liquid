@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{config.language}}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{config.title}}</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">{{config.title}}</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        {% for journal_html in journal_list %}
+        {{journal_html}}
+        {% endfor %}
+        <nav class="pagination" aria-label="Page navigation">
+          <a href="{{pagination.previous}}" aria-label="Previous page">&lt;</a>
+          {% for page_item in pagination.pages %}
+            {% if page_item.active == true %}
+              <a href="{{page_item.url}}" class="active">{{page_item.number}}</a>
+            {% else %}
+              <a href="{{page_item.url}}">{{page_item.number}}</a>
+            {% endif %}
+          {% endfor %}
+          <a href="{{pagination.next}}" aria-label="Next page">&gt;</a>
+        </nav>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

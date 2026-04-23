@@ -1,0 +1,11 @@
+source "https://rubygems.org"
+
+gem "liquid"
+gem "kramdown"
+gem "kramdown-parser-gfm"
+gem "tomlrb"
+gem "racc"
+gem "base64"
+gem "bigdecimal"
+gem "markdown_site"
+gem "markdown_extension"
