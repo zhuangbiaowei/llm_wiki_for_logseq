@@ -141,6 +141,52 @@ export function buildLlmRequest(input: {
   };
 }
 
+export interface KnowledgeSnippet {
+  pageName: string;
+  content: string;
+}
+
+export function buildKnowledgeChatRequest(input: {
+  model: string;
+  question: string;
+  snippets: KnowledgeSnippet[];
+  primaryLanguage?: PrimaryLanguage;
+}): LlmRequest {
+  const primaryLanguage = input.primaryLanguage ?? "zh";
+  const answerLanguage =
+    primaryLanguage === "zh"
+      ? "Answer in Chinese unless the user's question clearly asks for another language."
+      : "Answer in English unless the user's question clearly asks for another language.";
+  const context = input.snippets.length
+    ? input.snippets.map((snippet, index) => `[${index + 1}] [[${snippet.pageName}]]\n${snippet.content}`).join("\n\n")
+    : "No local knowledge snippets were found.";
+
+  return {
+    model: input.model,
+    temperature: 0.2,
+    messages: [
+      {
+        role: "system",
+        content:
+          "You answer questions using a local Logseq LLM Wiki knowledge base. Ground the answer in the provided snippets, cite page wikilinks, and say when the local knowledge is insufficient.",
+      },
+      {
+        role: "user",
+        content: [
+          answerLanguage,
+          "Use only the local snippets below as factual context. If they are insufficient, say what is missing and do not invent facts.",
+          "When useful, cite sources as Logseq wikilinks like [[Page Name]].",
+          "",
+          "Local snippets:",
+          context,
+          "",
+          `Question: ${input.question}`,
+        ].join("\n"),
+      },
+    ],
+  };
+}
+
 export function extractChatContent(response: unknown): string {
   const content = (response as { choices?: Array<{ message?: { content?: unknown } }> }).choices?.[0]?.message
     ?.content;

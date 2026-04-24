@@ -12,6 +12,16 @@
 
 当前示例内容以“苏联海军”主题为主，包含舰队、人物、兵种和相关原始资料页。
 
+## 插件界面截图
+
+![Analyze URL 对话框](./docs/screenshots/analyze-url-dialog.png)
+
+![LLM Wiki 计划预览](./docs/screenshots/wiki-plan-preview.png)
+
+![日志页写入记录](./docs/screenshots/journal-ingest-log.png)
+
+![对话知识库界面](./docs/screenshots/chat-knowledge-base.png)
+
 ## 目录结构
 
 ```text

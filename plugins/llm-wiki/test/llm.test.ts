@@ -1,4 +1,5 @@
 import {
+  buildKnowledgeChatRequest,
   buildLlmRequest,
   extractChatContent,
   normalizeChatCompletionsEndpoint,
@@ -22,6 +23,21 @@ describe("llm helpers", () => {
     expect(request.messages[1].content).toContain("raw immutable material");
     expect(request.messages[1].content).toContain("Primary language for compiled wiki output: 中文");
     expect(request.messages[1].content).toContain("Use Chinese for sourceTitle");
+    expect(request.temperature).toBe(0.2);
+  });
+
+  it("builds a local knowledge chat request with snippets", () => {
+    const request = buildKnowledgeChatRequest({
+      model: "test-model",
+      question: "北方舰队是什么？",
+      snippets: [{ pageName: "北方舰队", content: "- 苏联海军舰队之一" }],
+      primaryLanguage: "zh",
+    });
+
+    expect(request.model).toBe("test-model");
+    expect(request.messages[0].content).toContain("local Logseq LLM Wiki");
+    expect(request.messages[1].content).toContain("[[北方舰队]]");
+    expect(request.messages[1].content).toContain("北方舰队是什么？");
     expect(request.temperature).toBe(0.2);
   });
 

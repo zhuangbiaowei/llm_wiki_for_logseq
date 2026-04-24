@@ -12,6 +12,16 @@ This repository contains three parts:
 
 The current sample content focuses on the Soviet Navy, including fleets, people, branches, and source pages.
 
+## Plugin Screenshots
+
+![Analyze URL dialog](./docs/screenshots/analyze-url-dialog.png)
+
+![LLM Wiki plan preview](./docs/screenshots/wiki-plan-preview.png)
+
+![Journal ingest log](./docs/screenshots/journal-ingest-log.png)
+
+![Chat knowledge base](./docs/screenshots/chat-knowledge-base.png)
+
 ## Project Layout
 
 ```text
