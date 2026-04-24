@@ -48,9 +48,66 @@ export function extractReadableText(html: string): string {
   return extractEmbeddedText(html, visibleText);
 }
 
+const rawSourceNoiseLines = new Set([
+  "听过",
+  "收藏",
+  "留言",
+  "分享",
+  "，轻点两下取消在看",
+  "在看",
+  "，轻点两下取消赞",
+  "赞",
+  "小程序",
+  "视频",
+  "。",
+  "，",
+  "：",
+  "微信扫一扫可打开此内容， 使用完整服务",
+  "分析",
+  "×",
+  "允许",
+  "取消",
+  "微信扫一扫 使用小程序",
+  "知道了",
+  "向上滑动看下一个",
+  "TiDB-平凯数据库",
+  "轻触阅读原文",
+  "继续滑动看下一个",
+  "微信扫一扫 关注该公众号",
+  "阅读原文",
+  "预览时标签不可点",
+  "在小说阅读器中沉浸阅读",
+  "去阅读",
+  "在小说阅读器读本章",
+]);
+
+const rawSourceNoisePatterns = [/^Published:\s+/i, /^Collected:\s+/i];
+
+export function cleanRawSourceText(text: string): string {
+  const lines: string[] = [];
+
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim().replace(/[ \t]+/g, " ");
+
+    if (!line) {
+      if (lines.length > 0 && lines[lines.length - 1] !== "") lines.push("");
+      continue;
+    }
+
+    if (isRawSourceNoiseLine(line)) continue;
+    lines.push(line);
+  }
+
+  return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
 export function limitText(text: string, maxChars = 12000): string {
   if (text.length <= maxChars) return text;
   return `${text.slice(0, maxChars).trim()}\n\n[Content truncated for analysis.]`;
+}
+
+function isRawSourceNoiseLine(line: string): boolean {
+  return rawSourceNoiseLines.has(line) || rawSourceNoisePatterns.some((pattern) => pattern.test(line));
 }
 
 function decodeHtml(value: string): string {

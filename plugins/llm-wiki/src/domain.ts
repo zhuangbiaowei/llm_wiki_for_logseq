@@ -1,5 +1,5 @@
 export type KnowledgeLayer = "raw" | "wiki" | "output" | "schema" | "unknown";
-export type LlmProvider = "openai" | "openai-compatible" | "ollama";
+export type LlmProvider = "openai" | "deepseek" | "openai-compatible" | "ollama";
 export type PrimaryLanguage = "zh" | "en";
 
 export interface PluginSettings {

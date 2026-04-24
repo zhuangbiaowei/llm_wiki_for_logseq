@@ -1,4 +1,4 @@
-import { extractReadableText, extractTitle, limitText, normalizeHttpUrl } from "../src/web";
+import { cleanRawSourceText, extractReadableText, extractTitle, limitText, normalizeHttpUrl } from "../src/web";
 
 describe("web helpers", () => {
   it("accepts only http urls", () => {
@@ -25,5 +25,26 @@ describe("web helpers", () => {
 
   it("limits long content", () => {
     expect(limitText("x".repeat(20), 10)).toContain("[Content truncated for analysis.]");
+  });
+
+  it("removes raw source UI noise without dropping article content", () => {
+    const cleaned = cleanRawSourceText(
+      [
+        "听过",
+        "收藏",
+        "这里是正文，提到了分享机制。",
+        "，轻点两下取消赞",
+        "微信扫一扫 关注该公众号",
+        "阅读原文",
+        "Published: Unknown",
+        "正文里也可能提到阅读原文这个词，但不是整行。",
+      ].join("\n"),
+    );
+
+    expect(cleaned).toContain("这里是正文，提到了分享机制。");
+    expect(cleaned).toContain("正文里也可能提到阅读原文这个词");
+    expect(cleaned).not.toContain("听过");
+    expect(cleaned).not.toContain("微信扫一扫");
+    expect(cleaned).not.toContain("Published: Unknown");
   });
 });

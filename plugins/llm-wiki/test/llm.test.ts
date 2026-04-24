@@ -24,6 +24,20 @@ describe("llm helpers", () => {
     expect(request.messages[1].content).toContain("Primary language for compiled wiki output: 中文");
     expect(request.messages[1].content).toContain("Use Chinese for sourceTitle");
     expect(request.temperature).toBe(0.2);
+    expect(request.max_tokens).toBe(2048);
+    expect(request.response_format).toBeUndefined();
+  });
+
+  it("can enforce json mode for providers that handle it reliably", () => {
+    const request = buildLlmRequest({
+      model: "test-model",
+      url: "https://example.com",
+      title: "Example",
+      text: "Article text",
+      enforceJsonMode: true,
+    });
+
+    expect(request.response_format).toEqual({ type: "json_object" });
   });
 
   it("builds a local knowledge chat request with snippets", () => {
@@ -75,12 +89,34 @@ describe("llm helpers", () => {
     expect(config.endpoint).toBe("http://localhost:11434/v1/chat/completions");
   });
 
+  it("resolves deepseek provider defaults", () => {
+    const config = resolveLlmConfig({
+      ...defaultSettings,
+      llmProvider: "deepseek",
+      llmEndpoint: "",
+      llmApiKey: "key",
+      llmModel: "deepseek-chat",
+    });
+
+    expect(config.endpoint).toBe("https://api.deepseek.com/chat/completions");
+    expect(config.apiKeyRequired).toBe(true);
+  });
+
   it("normalizes v1 base endpoints to chat completions endpoints", () => {
     expect(normalizeChatCompletionsEndpoint("https://api.siliconflow.cn/v1/")).toBe(
       "https://api.siliconflow.cn/v1/chat/completions",
     );
     expect(normalizeChatCompletionsEndpoint("https://api.siliconflow.cn/v1/chat/completions")).toBe(
       "https://api.siliconflow.cn/v1/chat/completions",
+    );
+  });
+
+  it("normalizes bare base URLs to chat completions endpoints", () => {
+    expect(normalizeChatCompletionsEndpoint("https://api.deepseek.com")).toBe(
+      "https://api.deepseek.com/chat/completions",
+    );
+    expect(normalizeChatCompletionsEndpoint("https://api.deepseek.com/")).toBe(
+      "https://api.deepseek.com/chat/completions",
     );
   });
 });

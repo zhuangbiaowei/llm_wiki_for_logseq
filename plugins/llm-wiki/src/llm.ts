@@ -9,6 +9,10 @@ export interface LlmRequest {
   model: string;
   messages: ChatMessage[];
   temperature: number;
+  max_tokens?: number;
+  response_format?: {
+    type: "json_object";
+  };
 }
 
 export interface ResolvedLlmConfig {
@@ -24,6 +28,10 @@ const providerDefaults: Record<LlmProvider, { endpoint: string; apiKeyRequired: 
     endpoint: "https://api.openai.com/v1/chat/completions",
     apiKeyRequired: true,
   },
+  deepseek: {
+    endpoint: "https://api.deepseek.com/chat/completions",
+    apiKeyRequired: true,
+  },
   "openai-compatible": {
     endpoint: "",
     apiKeyRequired: true,
@@ -35,7 +43,9 @@ const providerDefaults: Record<LlmProvider, { endpoint: string; apiKeyRequired: 
 };
 
 export function normalizeProvider(value: unknown): LlmProvider {
-  if (value === "openai" || value === "openai-compatible" || value === "ollama") return value;
+  if (value === "openai" || value === "deepseek" || value === "openai-compatible" || value === "ollama") {
+    return value;
+  }
   return "openai-compatible";
 }
 
@@ -60,6 +70,15 @@ export function normalizeChatCompletionsEndpoint(endpoint: string): string {
   const withoutTrailingSlash = trimmed.replace(/\/+$/, "");
   if (withoutTrailingSlash.endsWith("/chat/completions")) return withoutTrailingSlash;
   if (withoutTrailingSlash.endsWith("/v1")) return `${withoutTrailingSlash}/chat/completions`;
+
+  try {
+    const parsed = new URL(withoutTrailingSlash);
+    if (parsed.pathname === "" || parsed.pathname === "/") {
+      return `${withoutTrailingSlash}/chat/completions`;
+    }
+  } catch {
+    return withoutTrailingSlash;
+  }
 
   return withoutTrailingSlash;
 }
@@ -95,7 +114,7 @@ export function buildUrlAnalysisMessages(input: {
     {
       role: "system",
       content:
-        "You are an LLM Wiki compiler. Analyze web content into durable Logseq wiki notes. Be concise, preserve source context, and propose useful wikilinks.",
+        "You are an LLM Wiki compiler. Analyze web content into durable Logseq wiki notes. Return valid json only. Be concise, preserve source context, and propose useful wikilinks.",
     },
     {
       role: "user",
@@ -133,12 +152,20 @@ export function buildLlmRequest(input: {
   title: string;
   text: string;
   primaryLanguage?: PrimaryLanguage;
+  enforceJsonMode?: boolean;
 }): LlmRequest {
-  return {
+  const request: LlmRequest = {
     model: input.model,
     temperature: 0.2,
+    max_tokens: 2048,
     messages: buildUrlAnalysisMessages(input),
   };
+
+  if (input.enforceJsonMode) {
+    request.response_format = { type: "json_object" };
+  }
+
+  return request;
 }
 
 export interface KnowledgeSnippet {

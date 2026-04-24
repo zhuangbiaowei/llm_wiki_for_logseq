@@ -23,7 +23,7 @@ import {
   type KnowledgeSnippet,
 } from "./llm";
 import { redact } from "./redaction";
-import { extractReadableText, extractTitle, limitText, normalizeHttpUrl, type DownloadedPage } from "./web";
+import { cleanRawSourceText, extractReadableText, extractTitle, limitText, normalizeHttpUrl, type DownloadedPage } from "./web";
 
 const settingsSchema: SettingSchemaDesc[] = [
   {
@@ -68,7 +68,7 @@ const settingsSchema: SettingSchemaDesc[] = [
     type: "enum",
     title: "LLM provider",
     description: "Provider preset for endpoint and authentication behavior.",
-    enumChoices: ["openai", "openai-compatible", "ollama"],
+    enumChoices: ["openai", "deepseek", "openai-compatible", "ollama"],
     enumPicker: "select",
     default: defaultSettings.llmProvider,
   },
@@ -117,7 +117,10 @@ function currentSettings(): PluginSettings {
     piiRedaction: configured.piiRedaction !== false,
     primaryLanguage: normalizePrimaryLanguage(configured.primaryLanguage),
     llmProvider:
-      configured.llmProvider === "openai" || configured.llmProvider === "openai-compatible" || configured.llmProvider === "ollama"
+      configured.llmProvider === "openai" ||
+      configured.llmProvider === "deepseek" ||
+      configured.llmProvider === "openai-compatible" ||
+      configured.llmProvider === "ollama"
         ? configured.llmProvider
         : defaultSettings.llmProvider,
     llmEndpoint: String(configured.llmEndpoint ?? defaultSettings.llmEndpoint),
@@ -414,7 +417,7 @@ async function writeRawSourcePage(page: DownloadedPage, preview: WikiChangePrevi
   });
 
   const rawBlocks = markdownToBlocks(
-    [`Source: ${page.url}`, `Collected: ${todayIso()}`, "Published: Unknown", "", limitText(page.text, 20000)].join("\n"),
+    [`Source: ${page.url}`, `Collected: ${todayIso()}`, "Published: Unknown", "", limitText(cleanRawSourceText(page.text), 20000)].join("\n"),
   );
 
   await appendBlocksToPage(preview.rawPageName, rawBlocks);
@@ -527,23 +530,14 @@ async function appendMarkdownBlocksToPage(pageName: string, markdown: string) {
 async function appendBlocksToPage(pageName: string, blocks: BatchBlock[]) {
   if (blocks.length === 0) return;
 
-  const [first, ...rest] = blocks;
-  const root = await logseq.Editor.appendBlockInPage(pageName, first.content, {
-    properties: first.properties ?? {},
-  });
-  if (!root) throw new Error(`Failed to append block to [[${pageName}]].`);
-
-  if (first.children?.length) {
-    await logseq.Editor.insertBatchBlock(root.uuid, first.children, { sibling: false });
-  }
-
-  for (const block of rest) {
-    const sibling = await logseq.Editor.insertBlock(root.uuid, block.content, {
-      sibling: true,
+  for (const block of blocks) {
+    const root = await logseq.Editor.appendBlockInPage(pageName, block.content, {
       properties: block.properties ?? {},
     });
-    if (sibling && block.children?.length) {
-      await logseq.Editor.insertBatchBlock(sibling.uuid, block.children, { sibling: false });
+    if (!root) throw new Error(`Failed to append block to [[${pageName}]].`);
+
+    if (block.children?.length) {
+      await logseq.Editor.insertBatchBlock(root.uuid, block.children, { sibling: false });
     }
   }
 }
@@ -573,6 +567,7 @@ async function approveCurrentWikiPlan() {
 
 const BROWSER_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+const LLM_REQUEST_TIMEOUT_MS = 90000;
 
 async function fetchTextFallback(url: string): Promise<string> {
   const response = await fetch(url, {
@@ -620,14 +615,18 @@ async function requestJson(url: string, apiKey: string, body: unknown): Promise<
   }
 
   try {
-    return await request._request<unknown>({
-      url,
-      method: "POST",
-      returnType: "json",
-      timeout: 60000,
-      headers,
-      data: body as object,
-    });
+    return await withTimeout(
+      request._request<unknown>({
+        url,
+        method: "POST",
+        returnType: "json",
+        timeout: LLM_REQUEST_TIMEOUT_MS,
+        headers,
+        data: body as object,
+      }),
+      LLM_REQUEST_TIMEOUT_MS,
+      `LLM request timed out after ${Math.round(LLM_REQUEST_TIMEOUT_MS / 1000)} seconds. Check the endpoint, model name, API key, and DeepSeek account status, then try a shorter page.`,
+    );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes("Not Found") || message.includes("404") || message.includes("invalid json response body")) {
@@ -636,6 +635,18 @@ async function requestJson(url: string, apiKey: string, body: unknown): Promise<
 
     throw error;
   }
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
 }
 
 async function downloadPage(url: string): Promise<DownloadedPage> {
@@ -664,13 +675,15 @@ async function analyzeDownloadedPage(page: DownloadedPage, settings: PluginSetti
   const llmConfig = resolveLlmConfig(settings);
   validateLlmConfig(llmConfig);
 
-  const text = settings.piiRedaction ? redact(page.text) : page.text;
+  const rawText = cleanRawSourceText(page.text);
+  const text = settings.piiRedaction ? redact(rawText) : rawText;
   const requestBody = buildLlmRequest({
     model: llmConfig.model,
     url: page.url,
     title: page.title,
-    text: limitText(text),
+    text: limitText(text, llmConfig.provider === "deepseek" ? 6000 : 12000),
     primaryLanguage: settings.primaryLanguage,
+    enforceJsonMode: llmConfig.provider !== "deepseek",
   });
   const response = await requestJson(llmConfig.endpoint, llmConfig.apiKey, requestBody);
 
