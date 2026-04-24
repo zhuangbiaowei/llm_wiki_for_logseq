@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>llm-wiki___raw___2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>llm-wiki___raw___2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险</h1>
+          <p>knowledge-layer:: raw<br />
+source-url:: https://mp.weixin.qq.com/s/a0kW5Pjo83adkrBDINdprg<br />
+collected:: 2026-04-24<br />
+published:: Unknown</p>
+
+<ul>
+  <li>Source: https://mp.weixin.qq.com/s/a0kW5Pjo83adkrBDINdprg</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>开源合规场景100问</td>
+          <td>第1问：使用LGPL代码被审计出风险，应如何规避风险？</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>软安科技</li>
+  <li>软安科技</li>
+  <li>软件网络数据隐私法律圈</li>
+  <li>「开源合规场景100问」</li>
+  <li>在开源软件广泛应用的今天，企业在使用第三方组件、发布产品、建立开发流程时，正面临越来越多的来自各类场景的开源许可合规要求，这些场景不仅仅需要技术判断，还需要结合法律边界的综合考量，最终合规落地。</li>
+  <li>「开源合规场景100问」 是软安科技联合广东信达律师事务所邹良城律师团队出品的栏目 ，以解析实际案例来解答开源许可合规的各种需求，以实战角度输出干货，用于规范各类开源组件许可合规场景。</li>
+  <li>本栏目长期连载，每期问题均来自用户真实案例，欢迎广大用户参与交流与探讨。</li>
+  <li>开源合规场景 第 1问</li>
+  <li>使用LGPL代码被审计出风险，应如何规避风险？</li>
+  <li>某软件开发团队在其自研商用产品中引入了一个涉及  PDF  功能的开源组件： flying-saucer-pdf-itext5 （开源地址： GitHub - flyingsaucerproject/flyingsaucer at itext5 ），该组件采用  LGPL-2.1  许可证。后被开源办公室审计指出存在合规风险，咨询应如何规避？</li>
+  <li>律师解答</li>
+  <li>01</li>
+  <li>L GPL 2.1 开源协议主要要求</li>
+  <li>LGPL 属于 Copyleft 类许可证，但相较于GPL的强 Copyleft 属性，LGPL 是一种弱 Copyleft 许可证。GPL要求所有衍生作品作为一个整体均须适用GPL，而LGPL则允许商业软件通过“类库引用”的方式使用 LGPL 类库，而不强制整个软件适用 LGPL。</li>
+  <li>具体来说：</li>
+  <li>（a） 如以复制、合并或修改源代码的方式使用 LGPL 开源软件，则该部分代码须适用 LGPL；</li>
+  <li>（b）如通过动态链接方式使用 LGPL 开源代码，专有软件部分及整个商业软件无需适用 LGPL；</li>
+  <li>（c）通过静态链接使用LGPL开源代码，需要履行两个义务，并确保一个实现结果，即：提供“最小源代码”，分发应用程序的代码（源代码或目标代码均可），并确保用户在修改LGPL库后，仍然可以与应用程序重新组合使用，即可以重新链接应用程序并生成新的二进制文件。在某些开发场景中，为了实现这种结果，企业可能需要公开应用程序的部分源代码。</li>
+  <li>02</li>
+  <li>案例合规风险解析</li>
+  <li>本案例中，开源办公室审计所指出的合规风险需结合该组件的具体使用方式进行进一步分析：</li>
+  <li>（1） 若使用方式为动态链接，基本可排除该组件的合规风险；</li>
+  <li>（2） 若涉及源代码使用（如对该 LGPL 代码进行了修改），则修改后的整个 LGPL 库须适用 LGPL 许可证。若对外分发二进制文件，衍生作品也须开源。同时，应声明对该库所作修改及修改日期；</li>
+  <li>（3） 若为静态链接使用，除开放使用了该 LGPL 库的代码外，可能需要开放更多代码，直到用户可重新链接为二进制文件并有效运行。</li>
+  <li>除上述审计已识别的风险外，使用 LGPL 2.1 开源许可证的软件还应注意以下合规要求：</li>
+  <li>以显著方式声明商业软件使用了该开源库，并展示版权声明、提供许可证副本；</li>
+  <li>在商业软件的终端用户协议中，删除禁止用户逆向工程的条款，或增设例外情形，以满足 LGPL 2.1 第 6 条“允许使用者为调试和修改进行逆向工程”的要求。</li>
+  <li>03</li>
+  <li>解决思路</li>
+  <li>该团队最终在产品发布前将PDF引擎迁移至许可证更宽松、更友好的开源 PDF 库组件，以彻底规避此类开源合规风险。</li>
+  <li>律师简介</li>
+  <li>邹良城， 广东信达律师事务所律师，曾在腾讯公司法务部工作十年，负责腾讯集团的知识产权诉讼和维权工作，对于互联网与软件领域的法律事务具有丰富的实务操作经验。</li>
+  <li>对于开源软件的合规治理与法律政策有深入的研究，曾为互联网、汽车制造、半导体、金融科技、智能硬件等行业的多家企业提供开源软件的法律培训／合规咨询／SBOM合规审查／合规体系建设等法律服务。</li>
+  <li>律师微信：lawyerzou2007</li>
+  <li>关于软安科技</li>
+  <li>软安科技深耕软件质量与安全检测领域，基于客户实际场景，提供一站式软件生态质量安全解决方案。核心团队汇聚国内外一线厂商资深人才，研发软件成分分析、源代码静态测试、模糊测试等核心产品，打造高度适配业务场景的行业解决方案，已获得汽车、半导体、通信等领域头部客户的信赖。</li>
+  <li>公司在成都、武汉、上海、北京、深圳、香港六地设立办公机构，构建覆盖全国的服务网络，为客户提供高效专业的全周期服务支持。</li>
+  <li>END</li>
+  <li>如需委托、联系开源合规律师</li>
+  <li>加入开源合规治理法律交流群</li>
+  <li>欢迎添加微信  lianfaqun  或扫码联系</li>
+  <li>软件网络数据隐私法律圈</li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

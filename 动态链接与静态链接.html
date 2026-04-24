@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>动态链接与静态链接 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>动态链接与静态链接</h1>
+          <p>knowledge-layer:: wiki<br />
+topic:: 开源合规</p>
+
+<ul>
+  <li>动态链接<br />
+source-url:: https://mp.weixin.qq.com/s/a0kW5Pjo83adkrBDINdprg<br />
+raw:: <a href="llm-wiki/raw/2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险.html">llm-wiki/raw/2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险</a><br />
+confidence-score:: 0.85<br />
+status:: current
+    <ul>
+      <li>使用 LGPL 代码时，若通过动态链接方式，专有软件部分及整个商业软件无需适用 LGPL，合规风险较低。</li>
+    </ul>
+  </li>
+  <li>若涉及源代码修改或静态链接，则需更严格的合规措施。</li>
+  <li>案例应用
+    <ul>
+      <li>若案例中使用 <a href="flying-saucer-pdf-itext5.html">flying-saucer-pdf-itext5</a> 组件的方式为动态链接，基本可排除合规风险。</li>
+    </ul>
+  </li>
+  <li>静态链接
+    <ul>
+      <li>使用静态链接时，必须履行两个义务并确保一个实现结果：</li>
+      <li>提供“最小源代码”。</li>
+      <li>分发应用程序的代码（源代码或目标代码均可）。</li>
+      <li>确保用户在修改 LGPL 库后，仍然可以与应用程序重新组合使用（即可重新链接并生成新二进制文件）。</li>
+      <li>在某些场景中，可能需要公开应用程序的部分源代码。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="llm-wiki___index.html">llm-wiki___index</a></li>
+  <li><a href="llm-wiki___log.html">llm-wiki___log</a></li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>
