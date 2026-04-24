@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>llm-wiki___raw___2026-04-24-openmythos-claude-mythos-架构的开源理论重建 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>llm-wiki___raw___2026-04-24-openmythos-claude-mythos-架构的开源理论重建</h1>
+          <p>knowledge-layer:: raw<br />
+source-url:: https://mp.weixin.qq.com/s/NRVA4sDsz6hgde4RB_DXeQ<br />
+collected:: 2026-04-24<br />
+published:: Unknown</p>
+
+<ul>
+  <li>Source: https://mp.weixin.qq.com/s/NRVA4sDsz6hgde4RB_DXeQ</li>
+  <li>听过</li>
+  <li>收藏</li>
+  <li>留言</li>
+  <li>分享</li>
+  <li>，轻点两下取消在看</li>
+  <li>在看</li>
+  <li>，轻点两下取消赞</li>
+  <li>赞</li>
+  <li>小程序</li>
+  <li>视频</li>
+  <li>。</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>，</li>
+  <li>：</li>
+  <li>微信扫一扫可打开此内容， 使用完整服务</li>
+  <li>分析</li>
+  <li>×</li>
+  <li>允许</li>
+  <li>取消</li>
+  <li>允许</li>
+  <li>取消</li>
+  <li>允许</li>
+  <li>取消</li>
+  <li>微信扫一扫 使用小程序</li>
+  <li>知道了</li>
+  <li>向上滑动看下一个</li>
+  <li>红薯 AI 胡说</li>
+  <li>轻触阅读原文</li>
+  <li>继续滑动看下一个</li>
+  <li>微信扫一扫 关注该公众号</li>
+  <li>预览时标签不可点</li>
+  <li>OpenMythos 本质上是一次严肃的 逆向工程学术尝试 ——作者通过梳理 2024-2026 年间关于循环 Transformer、MoE、动力学稳定性等方向的前沿论文，对 Claude Mythos 的架构做出系统性推断并开源实现。无论推断是否完全准确，其呈现的技术思路本身就颇具参考价值，尤其对于关注 AI 推理能力来源、推理时计算扩展等议题的研究者和开发者而言。</li>
+  <li>总结</li>
+  <li>在相同参数量下，增加平均循环次数、减少 token 数量，比用最少循环训练更多数据可以获得更低的 loss；推理时增加循环次数按 可预测的饱和指数衰减 提升质量。在 7.7 亿参数规模下，循环模型达到了 13 亿参数固定深度 Transformer 的下游质量—— 参数量减半，质量相当 。</li>
+  <li>扩展规律</li>
+  <li>连续深度批处理 ：因所有 token 共享同一循环块，模型可以在不同深度处对不同 token 或序列提前退出——简单输入快速处理，复杂输入运行更多迭代，理论上可提升 2-3 倍推理吞吐量。</li>
+  <li>LoRA 深度适配 ：在每次迭代时加入小型深度级 LoRA 模块，在保持权重共享紧凑性的同时，允许每次循环略微调整其行为。</li>
+  <li>自适应计算时间（ACT） ：超过一定深度后，过多的循环反而会 降低预测质量 ——隐藏状态漂过解并进入噪声，即「过度思考」问题。Mythos 几乎肯定有某种机制在答案收敛时停止循环，ACT 机制也使模型在某些假设下具有图灵完备性。</li>
+  <li>循环索引嵌入 ：类似 RoPE 的循环索引嵌入可以在每次循环时注入，使相同参数在不同迭代深度下实现功能不同的计算阶段——每次循环不是重复，而是独特的计算相位。</li>
+  <li>其他值得关注的设计推测</li>
+  <li>如果激活比例约为 5%，Mythos 可能持有数千亿的总参数，但每个 token 只激活其中一小部分——真实参数数量是存储数字，而非计算数字。</li>
+  <li>推测的设计是：将循环块中每个 FFN 替换为细粒度 MoE 层，路由器为每个 token 选择 top-mK 个专家，同时有少量 共享专家 始终激活，用于吸收跨领域的通用知识（语法、基础推理、通用上下文）。</li>
+  <li>循环 Transformer 解释了 Mythos 推理的 深度 ，但不能解释其 广度 。用同一套权重处理代码、数学、文学、科学、法律等截然不同的领域，需要 混合专家（MoE） 。</li>
+  <li>混合专家（MoE）猜想</li>
+  <li>解决方案是 通过构造来保证稳定性 ：将 A 参数化为连续负对角矩阵，使用 ZOH/Euler 离散化方案，强制  A := Diag(-exp(log_A)) ，配合一个可学习的标量 Δt。这确保  ρ(A) &lt; 1  始终成立，无论学习率或批次噪声如何。这就是  Parcae 架构 （Prairie 等人，2026），被认为是 Anthropic 使 Mythos 可训练所采用的最可能的方案。</li>
+  <li>解决方案的核心是将循环系统重新诠释为 离散线性时不变（LTI）动力学系统 ，其稳定性完全由矩阵 A 的谱半径决定： ρ(A) &lt; 1  → 稳定收敛； ρ(A) ≥ 1  → 不稳定发散。</li>
+  <li>训练循环模型出了名地不稳定，主要有两种失败模式： 残差爆炸 （隐藏状态跨循环无限增长）和 损失突刺 （训练因注入参数的谱范数过大而突然发散）。</li>
+  <li>训练稳定性问题及解决方案</li>
+  <li>一个 k 层、循环 L 次的模型，能达到 kL 层非循环模型的质量，而只需 k 层的参数量。内存占用不随推理深度增长；推理时计算量随循环数而非模型大小扩展。</li>
+  <li>参数不爆炸</li>
+  <li>更重要的是，连续潜在思维——不同于离散 token 输出——可以同时编码 多个候选的下一步 ，使模型在收敛前能在推理空间中进行类似广度优先搜索的探索。</li>
+  <li>每次循环迭代在功能上等价于链式思维的一步，但在连续潜在空间而非 token 空间中运行。运行 T 次循环的模型隐式模拟了 T 步 CoT 推理（已被 Saunshi 等人于 2025 年形式化证明）。</li>
+  <li>潜在思维作为隐式 CoT</li>
+  <li>在 5 步推理链上训练，用 10 步推理链测试，普通 Transformer 失败，循环 Transformer 成功——通过在推理时运行更多循环来实现。推理时循环数更多 = 推理链更深 = 解决更难的问题。</li>
+  <li>深度外推</li>
+  <li>普通 Transformer 无法以训练时从未见过的方式组合知识，而循环 Transformer 可以。这种能力通过一个 三阶段 grokking 过程 涌现：记忆 → 分布内泛化 → 系统性泛化（突然涌现，而非渐进式出现）。</li>
+  <li>系统性泛化</li>
+  <li>为什么这能解释 Mythos 的能力</li>
+  <li>将  e （来自 Prelude 的编码输入）在每一步注入，正是防止模型「漂移」的机制——它使原始输入信号在整个循环深度中保持存活。</li>
+  <li>h_{t+1} = A·h_t + B·e + Transformer(h_t, e)</li>
+  <li>每次循环步骤的更新规则是：</li>
+  <li>Prelude（前奏层） ：标准 Transformer 层，只运行一次； Recurrent Block（循环块） ：被循环 T 次，每次迭代以隐藏状态 h 和输入注入 e 进行更新； Coda（尾声层） ：标准 Transformer 层，只运行一次。</li>
+  <li>整体结构分为三个功能模块：</li>
+  <li>架构设计</li>
+  <li>关键点：这不是链式思维（Chain-of-Thought）。  没有中间 token 输出，所有推理都在 单次前向传播中静默完成 ，在连续的潜在空间中进行。</li>
+  <li>Claude Mythos 被怀疑是一种 循环深度 Transformer（Recurrent-Depth Transformer，RDT） ——也叫 Looped Transformer（LT）。它不是通过堆叠数百个独立层来实现深度，而是将一组层 复用并在每次前向传播中运行多次 。权重相同，但循环更多，思考更深。</li>
+  <li>核心假说：Mythos 是一个「循环深度 Transformer」</li>
+  <li>简单来说，这个项目的出发点是：Anthropic 发布了 Claude Mythos 这个模型（显然性能极为出色），但从未公开其架构细节。于是作者通过研究相关学术论文和社区讨论，推断出其底层架构，并将其开源复现。</li>
+  <li>OpenMythos 是一个对 Claude Mythos 架构的理论性开源重建项目，由 Kye Gomez 基于第一性原理和现有研究文献构建而成。</li>
+  <li>项目背景</li>
+  <li>在小说阅读器中沉浸阅读</li>
+  <li>去阅读</li>
+  <li>在小说阅读器读本章</li>
+  <li>红薯 AI 胡说</li>
+  <li>OpenMythos —— Claude Mythos 架构的开源理论重建</li>
+  <li>Published: Unknown</li>
+  <li>Collected: 2026-04-24</li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

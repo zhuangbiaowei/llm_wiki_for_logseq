@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>循环深度Transformer - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>循环深度Transformer</h1>
+          <p>knowledge-layer:: wiki<br />
+topic:: 人工智能架构</p>
+
+<ul>
+  <li>核心概念<br />
+source-url:: https://mp.weixin.qq.com/s/NRVA4sDsz6hgde4RB_DXeQ<br />
+raw:: <a href="llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建.html">llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建</a><br />
+confidence-score:: 0.85<br />
+status:: current
+    <ul>
+      <li>循环深度Transformer（Recurrent-Depth Transformer, RDT），也称为循环Transformer（Looped Transformer, LT）。</li>
+    </ul>
+  </li>
+  <li><a href="Claude Mythos.html">Claude Mythos</a></li>
+  <li><a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></li>
+  <li>相关概念
+    <ul>
+      <li><a href="Parcae架构.html">Parcae架构</a></li>
+    </ul>
+  </li>
+  <li><strong>参数效率</strong>：一个k层、循环L次的模型，能达到kL层非循环模型的质量，而只需k层的参数量。内存占用不随推理深度增长；推理时计算量随循环数而非模型大小扩展。</li>
+  <li><strong>潜在思维作为隐式CoT</strong>：每次循环迭代在功能上等价于链式思维的一步，但在连续潜在空间而非token空间中运行。运行T次循环的模型隐式模拟了T步CoT推理。
+    <ul>
+      <li>连续潜在思维可以同时编码多个候选的下一步，使模型在收敛前能在推理空间中进行类似广度优先搜索的探索。</li>
+    </ul>
+  </li>
+  <li><strong>深度外推</strong>：在5步推理链上训练，用10步推理链测试，普通Transformer失败，循环Transformer成功——通过在推理时运行更多循环来实现。推理时循环数更多 = 推理链更深 = 解决更难的问题。</li>
+  <li>优势
+    <ul>
+      <li><strong>系统性泛化</strong>：普通Transformer无法以训练时从未见过的方式组合知识，而循环Transformer可以。这种能力通过一个三阶段grokking过程涌现：记忆 → 分布内泛化 → 系统性泛化（突然涌现，而非渐进式出现）。</li>
+    </ul>
+  </li>
+  <li><strong>Coda（尾声层）</strong>：标准Transformer层，只运行一次。</li>
+  <li><strong>Recurrent Block（循环块）</strong>：被循环T次，每次迭代以隐藏状态h和输入注入e进行更新。
+    <ul>
+      <li>更新规则：<code>h_{t+1} = A·h_t + B·e + Transformer(h_t, e)</code></li>
+      <li>将输入注入e在每一步注入，是防止模型“漂移”的机制，使原始输入信号在整个循环深度中保持存活。</li>
+    </ul>
+  </li>
+  <li><strong>Prelude（前奏层）</strong>：标准Transformer层，只运行一次。</li>
+  <li>架构组成
+    <ul>
+      <li>一个典型的循环深度Transformer结构分为三个功能模块：</li>
+    </ul>
+  </li>
+  <li>所有推理都在<strong>单次前向传播中静默完成</strong>，在连续的潜在空间中进行。</li>
+  <li>没有中间token输出。</li>
+  <li>与链式思维（CoT）的区别
+    <ul>
+      <li><strong>不是</strong>链式思维（Chain-of-Thought）。</li>
+    </ul>
+  </li>
+  <li>权重相同，但循环更多，思考更深。</li>
+  <li>核心思想：不是通过堆叠数百个独立层来实现深度，而是<strong>复用同一组层</strong>，在每次前向传播中<strong>运行多次</strong>。</li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="Claude Mythos.html">Claude Mythos</a></li>
+  <li><a href="OpenMythos.html">OpenMythos</a></li>
+  <li><a href="Parcae架构.html">Parcae架构</a></li>
+  <li><a href="llm-wiki___index.html">llm-wiki___index</a></li>
+  <li><a href="llm-wiki___log.html">llm-wiki___log</a></li>
+  <li><a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

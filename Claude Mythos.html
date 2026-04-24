@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Claude Mythos - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>Claude Mythos</h1>
+          <ul>
+  <li>概述<br />
+source-url:: https://mp.weixin.qq.com/s/NRVA4sDsz6hgde4RB_DXeQ<br />
+raw:: <a href="llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建.html">llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建</a><br />
+confidence-score:: 0.85<br />
+status:: current
+    <ul>
+      <li><a href="Anthropic.html">Anthropic</a>发布的高性能AI模型。</li>
+    </ul>
+  </li>
+  <li>在7.7亿参数规模下，循环模型达到了13亿参数固定深度Transformer的下游质量——<strong>参数量减半，质量相当</strong>。</li>
+  <li>推理时增加循环次数按<strong>可预测的饱和指数衰减</strong>提升质量。</li>
+  <li>扩展规律
+    <ul>
+      <li>在相同参数量下，增加平均循环次数、减少token数量，比用最少循环训练更多数据可以获得更低的loss。</li>
+    </ul>
+  </li>
+  <li><strong>LoRA深度适配</strong>：在每次迭代时加入小型深度级LoRA模块，在保持权重共享紧凑性的同时，允许每次循环略微调整其行为。</li>
+  <li>其他推测的设计细节
+    <ul>
+      <li><strong>循环索引嵌入</strong>：类似RoPE的循环索引嵌入可以在每次循环时注入，使相同参数在不同迭代深度下实现功能不同的计算阶段。</li>
+    </ul>
+  </li>
+  <li>推测结合了<a href="混合专家（MoE）.html">混合专家（MoE）</a>系统，用同一套权重处理代码、数学、文学、科学、法律等截然不同的领域。
+    <ul>
+      <li>可能将循环块中每个FFN替换为细粒度MoE层。</li>
+      <li>路由器为每个token选择top-mK个专家。</li>
+      <li>包含少量<strong>共享专家</strong>始终激活，用于吸收跨领域的通用知识（语法、基础推理、通用上下文）。</li>
+      <li>如果激活比例约为5%，Mythos可能持有数千亿的总参数，但每个token只激活其中一小部分。</li>
+    </ul>
+  </li>
+  <li>推测的广度能力来源
+    <ul>
+      <li>仅靠循环Transformer解释了推理的<strong>深度</strong>，但不能解释其处理多领域的<strong>广度</strong>。</li>
+    </ul>
+  </li>
+  <li>可能包含<a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a>机制来防止“过度思考”并提升效率。</li>
+  <li>训练稳定性可能通过<a href="Parcae架构.html">Parcae架构</a>保证。</li>
+  <li>推测的架构核心（基于OpenMythos项目）
+    <ul>
+      <li>核心架构被推测为<a href="循环深度Transformer.html">循环深度Transformer</a>（RDT）。</li>
+    </ul>
+  </li>
+  <li>性能极为出色，但从未公开其架构细节。</li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="OpenMythos.html">OpenMythos</a></li>
+  <li><a href="Parcae架构.html">Parcae架构</a></li>
+  <li><a href="llm-wiki___index.html">llm-wiki___index</a></li>
+  <li><a href="llm-wiki___log.html">llm-wiki___log</a></li>
+  <li><a href="循环深度Transformer.html">循环深度Transformer</a></li>
+  <li><a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>
