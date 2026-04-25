@@ -2,6 +2,14 @@ export type KnowledgeLayer = "raw" | "wiki" | "output" | "schema" | "unknown";
 export type LlmProvider = "openai" | "deepseek" | "openai-compatible" | "ollama";
 export type PrimaryLanguage = "zh" | "en";
 
+export interface McpServiceConfig {
+  id: string;
+  name: string;
+  type: "url";
+  url: string;
+  enabled: boolean;
+}
+
 export interface PluginSettings {
   agentsPath: string;
   wikiNamespace: string;
@@ -13,6 +21,7 @@ export interface PluginSettings {
   llmEndpoint: string;
   llmApiKey: string;
   llmModel: string;
+  mcpServices: unknown;
 }
 
 export interface IngestProposal {
@@ -72,6 +81,7 @@ export const defaultSettings: PluginSettings = {
   llmEndpoint: "",
   llmApiKey: "",
   llmModel: "",
+  mcpServices: "[]",
 };
 
 export function normalizePrimaryLanguage(value: unknown): PrimaryLanguage {

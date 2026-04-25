@@ -1,4 +1,5 @@
 import { languageLabel, type LlmProvider, type PluginSettings, type PrimaryLanguage } from "./domain";
+import type { McpSearchResult } from "./mcp";
 
 export interface ChatMessage {
   role: "system" | "user" | "assistant";
@@ -177,6 +178,7 @@ export function buildKnowledgeChatRequest(input: {
   model: string;
   question: string;
   snippets: KnowledgeSnippet[];
+  mcpResults?: McpSearchResult[];
   primaryLanguage?: PrimaryLanguage;
 }): LlmRequest {
   const primaryLanguage = input.primaryLanguage ?? "zh";
@@ -187,6 +189,14 @@ export function buildKnowledgeChatRequest(input: {
   const context = input.snippets.length
     ? input.snippets.map((snippet, index) => `[${index + 1}] [[${snippet.pageName}]]\n${snippet.content}`).join("\n\n")
     : "No local knowledge snippets were found.";
+  const mcpContext = input.mcpResults?.length
+    ? input.mcpResults
+        .map((result, index) => {
+          const url = result.url ? `\nURL: ${result.url}` : "";
+          return `[MCP ${index + 1}] ${result.serviceName} / ${result.title}${url}\n${result.content}`;
+        })
+        .join("\n\n")
+    : "No MCP search results were opened for this turn.";
 
   return {
     model: input.model,
@@ -195,19 +205,84 @@ export function buildKnowledgeChatRequest(input: {
       {
         role: "system",
         content:
-          "You answer questions using a local Logseq LLM Wiki knowledge base. Ground the answer in the provided snippets, cite page wikilinks, and say when the local knowledge is insufficient.",
+          "You answer questions using a local Logseq LLM Wiki knowledge base and optional MCP search results. Distinguish local knowledge from MCP search material, cite local pages as wikilinks, and do not invent facts.",
       },
       {
         role: "user",
         content: [
           answerLanguage,
-          "Use only the local snippets below as factual context. If they are insufficient, say what is missing and do not invent facts.",
+          "Use only the local snippets and MCP search results below as factual context. If they are insufficient, say what is missing and do not invent facts.",
           "When useful, cite sources as Logseq wikilinks like [[Page Name]].",
+          "For MCP search material, cite the service and title rather than converting it into a local wikilink.",
           "",
-          "Local snippets:",
+          "Local knowledge snippets:",
           context,
           "",
+          "MCP search results:",
+          mcpContext,
+          "",
           `Question: ${input.question}`,
+        ].join("\n"),
+      },
+    ],
+  };
+}
+
+export function buildSearchSaveRequest(input: {
+  model: string;
+  question: string;
+  localSnippets: KnowledgeSnippet[];
+  mcpResults: McpSearchResult[];
+  primaryLanguage?: PrimaryLanguage;
+}): LlmRequest {
+  const primaryLanguage = input.primaryLanguage ?? "zh";
+  const languageRule =
+    primaryLanguage === "zh"
+      ? "Write sourceTitle, topic, page titles, summaries, reasons, and content in Chinese unless proper nouns or source terms should remain unchanged."
+      : "Write sourceTitle, topic, page titles, summaries, reasons, and content in English unless proper nouns or source terms should remain unchanged.";
+  const localContext = input.localSnippets.length
+    ? input.localSnippets.map((snippet, index) => `[Local ${index + 1}] [[${snippet.pageName}]]\n${snippet.content}`).join("\n\n")
+    : "No local knowledge snippets.";
+  const mcpContext = input.mcpResults.length
+    ? input.mcpResults
+        .map((result, index) => {
+          const url = result.url ? `\nURL: ${result.url}` : "";
+          return `[MCP ${index + 1}] ${result.serviceName} / ${result.title}${url}\n${result.content}`;
+        })
+        .join("\n\n")
+    : "No MCP search results.";
+
+  return {
+    model: input.model,
+    temperature: 0.2,
+    max_tokens: 2048,
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are an LLM Wiki compiler. Turn chat search context into durable Logseq wiki notes. Return valid json only.",
+      },
+      {
+        role: "user",
+        content: [
+          "Return strict JSON only. Do not wrap it in Markdown fences.",
+          "Schema:",
+          '{"sourceTitle":"Source title","sourcePublishedDate":"YYYY-MM-DD or Unknown","topic":"one broad topic","pages":[{"title":"Concept or entity page title","topic":"one broad topic","summary":"One-line index summary","reason":"Why this page should be created or updated","content":"Markdown blocks to append to the page. Use [[wikilinks]] where useful.","seeAlso":["Related Page"]}]}',
+          "",
+          "Compilation rules:",
+          "- Save durable concepts and entities, not a transcript summary.",
+          "- Clearly mark claims that came from MCP search context when relevant.",
+          "- Preserve useful source titles and URLs in the content when they help future verification.",
+          "- Prefer focused pages over one large miscellaneous page.",
+          `- ${languageRule}`,
+          "",
+          `Original user question: ${input.question}`,
+          "",
+          "Local knowledge snippets:",
+          localContext,
+          "",
+          "MCP search results:",
+          mcpContext,
         ].join("\n"),
       },
     ],

@@ -1,6 +1,7 @@
 import {
   buildKnowledgeChatRequest,
   buildLlmRequest,
+  buildSearchSaveRequest,
   extractChatContent,
   normalizeChatCompletionsEndpoint,
   resolveLlmConfig,
@@ -52,7 +53,38 @@ describe("llm helpers", () => {
     expect(request.messages[0].content).toContain("local Logseq LLM Wiki");
     expect(request.messages[1].content).toContain("[[北方舰队]]");
     expect(request.messages[1].content).toContain("北方舰队是什么？");
+    expect(request.messages[1].content).toContain("MCP search results");
     expect(request.temperature).toBe(0.2);
+  });
+
+  it("builds a knowledge chat request with separate MCP search context", () => {
+    const request = buildKnowledgeChatRequest({
+      model: "test-model",
+      question: "What changed?",
+      snippets: [{ pageName: "Local Page", content: "Local context" }],
+      mcpResults: [{ serviceId: "mcp-1", serviceName: "Web MCP", title: "Remote result", content: "Remote context" }],
+      primaryLanguage: "en",
+    });
+
+    expect(request.messages[1].content).toContain("Local knowledge snippets");
+    expect(request.messages[1].content).toContain("[[Local Page]]");
+    expect(request.messages[1].content).toContain("MCP search results");
+    expect(request.messages[1].content).toContain("Web MCP / Remote result");
+  });
+
+  it("builds a search save request for durable wiki compilation", () => {
+    const request = buildSearchSaveRequest({
+      model: "test-model",
+      question: "保存什么？",
+      localSnippets: [{ pageName: "本地页面", content: "- 本地材料" }],
+      mcpResults: [{ serviceId: "mcp-1", serviceName: "Search MCP", title: "远程材料", content: "- 远程材料" }],
+      primaryLanguage: "zh",
+    });
+
+    expect(request.messages[0].content).toContain("LLM Wiki compiler");
+    expect(request.messages[1].content).toContain("Return strict JSON only");
+    expect(request.messages[1].content).toContain("[[本地页面]]");
+    expect(request.messages[1].content).toContain("Search MCP / 远程材料");
   });
 
   it("extracts chat response content", () => {

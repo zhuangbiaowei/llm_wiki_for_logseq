@@ -16,12 +16,28 @@ import {
 } from "./domain";
 import {
   buildKnowledgeChatRequest,
+  buildSearchSaveRequest,
   buildLlmRequest,
   extractChatContent,
   resolveLlmConfig,
   validateLlmConfig,
   type KnowledgeSnippet,
 } from "./llm";
+import {
+  assertMcpSuccess,
+  buildMcpInitializedNotification,
+  buildMcpInitializeRequest,
+  buildMcpToolCallRequest,
+  buildMcpToolsListRequest,
+  chooseSearchTool,
+  createMcpService,
+  extractMcpSseEndpoint,
+  extractMcpSearchResults,
+  extractMcpTools,
+  isMcpSseUrl,
+  parseMcpServices,
+  type McpSearchResult,
+} from "./mcp";
 import { redact } from "./redaction";
 import { cleanRawSourceText, extractReadableText, extractTitle, limitText, normalizeHttpUrl, type DownloadedPage } from "./web";
 
@@ -93,6 +109,13 @@ const settingsSchema: SettingSchemaDesc[] = [
     description: "Model name sent to the chat completions endpoint.",
     default: defaultSettings.llmModel,
   },
+  {
+    key: "mcpServicesHelp",
+    type: "heading",
+    title: "MCP Services",
+    description: "Open the LLM Wiki toolbar menu and choose MCP服务管理 to add, enable, disable, or delete URL-type MCP services. The service list is managed by the plugin UI, not by editing JSON here.",
+    default: null,
+  },
 ];
 
 let currentProposal: ReturnType<typeof buildIngestProposal> | null = null;
@@ -102,10 +125,17 @@ let currentDownloadedPage: DownloadedPage | null = null;
 interface ChatTurn {
   role: "user" | "assistant";
   content: string;
-  sources?: string[];
+  localSources?: string[];
+  mcpSources?: string[];
 }
 
 let currentChatTurns: ChatTurn[] = [];
+let activeMcpServiceIds = new Set<string>();
+let lastChatSearchContext: {
+  question: string;
+  localSnippets: KnowledgeSnippet[];
+  mcpResults: McpSearchResult[];
+} | null = null;
 
 function currentSettings(): PluginSettings {
   const configured = (logseq.settings ?? {}) as Partial<PluginSettings>;
@@ -126,6 +156,7 @@ function currentSettings(): PluginSettings {
     llmEndpoint: String(configured.llmEndpoint ?? defaultSettings.llmEndpoint),
     llmApiKey: String(configured.llmApiKey ?? defaultSettings.llmApiKey),
     llmModel: String(configured.llmModel ?? defaultSettings.llmModel),
+    mcpServices: configured.mcpServices ?? defaultSettings.mcpServices,
   };
 }
 
@@ -212,50 +243,147 @@ function urlDialogTemplate(): string {
 }
 
 function toolbarMenuTemplate(position: { left: number; top: number }): string {
+  const text = uiText();
   return `
     <nav class="llm-wiki-floating-menu" style="left: ${position.left}px; top: ${position.top}px;" aria-label="LLM Wiki menu">
-      <button data-on-click="openUrlDialog">输入URL</button>
-      <button data-on-click="openKnowledgeChatDialog">对话知识库</button>
-      <button data-on-click="togglePrimaryLanguage">切换设置语言</button>
+      <button data-on-click="openUrlDialog">${text.openUrl}</button>
+      <button data-on-click="openKnowledgeChatDialog">${text.knowledgeChatTitle}</button>
+      <button data-on-click="openMcpManagerDialog">${text.mcpManagerTitle}</button>
+      <button data-on-click="togglePrimaryLanguage">${text.toggleLanguage}</button>
     </nav>
   `;
 }
 
+function mcpManagerTemplate(services = parseMcpServices(currentSettings().mcpServices)): string {
+  const text = uiText();
+  const rows = services.length
+    ? services
+        .map(
+          (service) => `
+            <li class="llm-wiki-mcp-row">
+              <div>
+                <strong>${escapeHtml(service.name)}</strong>
+                <div class="llm-wiki-mcp-url">${escapeHtml(service.url)}</div>
+              </div>
+              <div class="llm-wiki-mcp-actions">
+                <button data-on-click="toggleMcpService" data-service-id="${escapeHtml(service.id)}">${service.enabled ? text.disable : text.enable}</button>
+                <button data-on-click="deleteMcpService" data-service-id="${escapeHtml(service.id)}">${text.delete}</button>
+              </div>
+            </li>
+          `,
+        )
+        .join("")
+    : `<li class="llm-wiki-chat-empty">${text.noMcpServices}</li>`;
+
+  return `
+    <div class="llm-wiki-modal llm-wiki-modal-wide">
+      <header>
+        <strong>${text.mcpManagerTitle}</strong>
+        <button data-on-click="closeIngestModal" aria-label="Close">x</button>
+      </header>
+      <section>
+        <div class="llm-wiki-mcp-form">
+          <input id="llm-wiki-mcp-name-input" class="llm-wiki-input" type="text" placeholder="${text.mcpNamePlaceholder}" />
+          <input id="llm-wiki-mcp-url-input" class="llm-wiki-input" type="url" placeholder="${text.mcpUrlPlaceholder}" />
+          <button data-on-click="addMcpService">${text.add}</button>
+        </div>
+        <div class="llm-wiki-help">${text.mcpManagerHelp}</div>
+      </section>
+      <section>
+        <ul class="llm-wiki-mcp-list">${rows}</ul>
+      </section>
+    </div>
+  `;
+}
+
 function chatDialogTemplate(turns: ChatTurn[], isLoading = false): string {
+  const text = uiText();
+  const mcpServices = parseMcpServices(currentSettings().mcpServices).filter((service) => service.enabled);
+  const mcpControls = mcpServices.length
+    ? mcpServices
+        .map((service) => {
+          const active = activeMcpServiceIds.has(service.id);
+          return `<button class="llm-wiki-mcp-toggle ${active ? "is-active" : ""}" data-on-click="toggleChatMcpService" data-service-id="${escapeHtml(service.id)}">${active ? text.close : text.open} ${escapeHtml(service.name)}</button>`;
+        })
+        .join("")
+    : `<span class="llm-wiki-help">${text.noEnabledMcpServices}</span>`;
   const messages = turns.length
     ? turns
         .map((turn) => {
-          const sources = turn.sources?.length
-            ? `<div class="llm-wiki-chat-sources">Sources: ${turn.sources.map((source) => `[[${escapeHtml(source)}]]`).join(", ")}</div>`
+          const localSources = turn.localSources?.length
+            ? `<div class="llm-wiki-chat-sources"><strong>${text.localKnowledgeLabel}:</strong> ${turn.localSources.map((source) => `[[${escapeHtml(source)}]]`).join(", ")}</div>`
+            : "";
+          const mcpSources = turn.mcpSources?.length
+            ? `<div class="llm-wiki-chat-sources"><strong>MCP Search:</strong> ${turn.mcpSources.map(escapeHtml).join(", ")}</div>`
             : "";
           return `
             <article class="llm-wiki-chat-message llm-wiki-chat-message-${turn.role}">
-              <div class="llm-wiki-chat-role">${turn.role === "user" ? "You" : "LLM Wiki"}</div>
+              <div class="llm-wiki-chat-role">${turn.role === "user" ? text.userRole : "LLM Wiki"}</div>
               <div class="llm-wiki-chat-content">${escapeHtml(turn.content).replace(/\n/g, "<br />")}</div>
-              ${sources}
+              ${localSources}
+              ${mcpSources}
             </article>
           `;
         })
         .join("")
-    : `<div class="llm-wiki-chat-empty">Ask a question. LLM Wiki will retrieve local knowledge pages and answer from that context.</div>`;
+    : `<div class="llm-wiki-chat-empty">${text.chatEmpty}</div>`;
 
   return `
     <div class="llm-wiki-modal llm-wiki-chat-modal">
       <header>
-        <strong>对话知识库</strong>
+        <strong>${text.knowledgeChatTitle}</strong>
         <button data-on-click="closeIngestModal" aria-label="Close">x</button>
       </header>
+      <section class="llm-wiki-mcp-chat-bar">
+        ${mcpControls}
+      </section>
       <section class="llm-wiki-chat-log" aria-live="polite">
         ${messages}
-        ${isLoading ? `<div class="llm-wiki-chat-loading">Retrieving local knowledge and asking the configured LLM...</div>` : ""}
+        ${isLoading ? `<div class="llm-wiki-chat-loading">${text.chatLoading}</div>` : ""}
       </section>
       <footer class="llm-wiki-chat-form">
-        <textarea id="llm-wiki-chat-input" class="llm-wiki-input llm-wiki-chat-input" rows="3" placeholder="输入你的问题..." ${isLoading ? "disabled" : ""}></textarea>
-        <button data-on-click="askKnowledgeBase" ${isLoading ? "disabled" : ""}>Send</button>
+        <textarea id="llm-wiki-chat-input" class="llm-wiki-input llm-wiki-chat-input" rows="3" placeholder="${text.chatPlaceholder}" ${isLoading ? "disabled" : ""}></textarea>
+        <button data-on-click="askKnowledgeBase" ${isLoading ? "disabled" : ""}>${text.send}</button>
       </footer>
-      <div class="llm-wiki-help">Answers are grounded in local Logseq pages; configure the LLM provider in plugin settings first.</div>
+      <div class="llm-wiki-help">${text.chatHelp}</div>
     </div>
   `;
+}
+
+function uiText(settings = currentSettings()) {
+  const zh = settings.primaryLanguage === "zh";
+  return {
+    add: zh ? "添加" : "Add",
+    availableMcpTools: zh ? "可用工具" : "Available tools",
+    chatEmpty: zh ? "请输入问题。LLM Wiki 会检索本地知识库页面，并结合上下文回答。" : "Ask a question. LLM Wiki will retrieve local knowledge pages and answer from that context.",
+    chatHelp: zh ? "回答会区分本地 Logseq 页面与已打开的 MCP Search 服务。输入 /save 可整理并保存上一轮搜索上下文。" : "Answers distinguish local Logseq pages from opened MCP Search services. Type /save to organize and save the previous search context.",
+    chatLoading: zh ? "正在检索本地知识库和 MCP 搜索结果，并请求已配置的 LLM..." : "Retrieving local knowledge, MCP search results, and asking the configured LLM...",
+    chatPlaceholder: zh ? "输入你的问题，或输入 /save 保存上一轮搜索内容..." : "Enter your question, or type /save to save the previous search context...",
+    close: zh ? "关闭" : "Close",
+    delete: zh ? "删除" : "Delete",
+    disable: zh ? "禁用" : "Disable",
+    enable: zh ? "启用" : "Enable",
+    enterQuestionFirst: zh ? "请先输入问题。" : "Enter a question first.",
+    errorPrefix: zh ? "错误" : "Error",
+    localKnowledgeLabel: zh ? "本地知识库" : "Local knowledge",
+    mcpManagerHelp: zh ? "仅保存 URL 类型 MCP 服务。聊天窗口中可以按需打开已启用的服务。" : "Only URL-type MCP services are saved. Enabled services can be opened from the chat window as needed.",
+    mcpManagerTitle: zh ? "MCP 服务管理" : "MCP Service Manager",
+    mcpNamePlaceholder: zh ? "服务名称，例如 Exa Search" : "Service name, for example Exa Search",
+    mcpUrlPlaceholder: zh ? "MCP URL，例如 https://example.com/mcp" : "MCP URL, for example https://example.com/mcp",
+    noEnabledMcpServices: zh ? "没有已启用的 MCP 服务。" : "No enabled MCP services.",
+    noMcpServices: zh ? "还没有 MCP 服务。" : "No MCP services yet.",
+    noPreviousSearchContext: zh ? "没有可保存的上一轮搜索上下文。" : "No previous search context to save.",
+    noSearchToolContent: zh ? "这个 MCP 服务没有暴露可用于搜索的工具。" : "This MCP service did not expose a search-like tool.",
+    noSearchToolTitle: zh ? "没有搜索工具" : "No search tool",
+    mcpSearchErrorTitle: zh ? "MCP 搜索错误" : "MCP Search error",
+    open: zh ? "打开" : "Open",
+    openUrl: zh ? "输入 URL" : "Enter URL",
+    knowledgeChatTitle: zh ? "对话知识库" : "Knowledge Chat",
+    send: zh ? "发送" : "Send",
+    savedSearchContext: zh ? "已将上一轮搜索内容整理并保存到本地知识库。" : "The previous search context has been organized and saved to the local knowledge base.",
+    toggleLanguage: zh ? "切换设置语言" : "Switch language",
+    userRole: zh ? "你" : "You",
+  };
 }
 
 function statusTemplate(title: string, detail: string): string {
@@ -326,6 +454,11 @@ function bindMainUiHandlers() {
     if (action === "closeIngestModal") closeMainUi();
     if (action === "openUrlDialog") openUrlDialog();
     if (action === "openKnowledgeChatDialog") openKnowledgeChatDialog();
+    if (action === "openMcpManagerDialog") openMcpManagerDialog();
+    if (action === "addMcpService") void addMcpServiceFromDialog();
+    if (action === "toggleMcpService") void toggleMcpServiceFromDialog(event);
+    if (action === "deleteMcpService") void deleteMcpServiceFromDialog(event);
+    if (action === "toggleChatMcpService") toggleChatMcpService(event);
     if (action === "togglePrimaryLanguage") {
       void togglePrimaryLanguage();
       closeMainUi();
@@ -568,6 +701,7 @@ async function approveCurrentWikiPlan() {
 const BROWSER_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 const LLM_REQUEST_TIMEOUT_MS = 90000;
+const MCP_REQUEST_TIMEOUT_MS = 30000;
 
 async function fetchTextFallback(url: string): Promise<string> {
   const response = await fetch(url, {
@@ -637,6 +771,122 @@ async function requestJson(url: string, apiKey: string, body: unknown): Promise<
   }
 }
 
+async function requestMcpJson(url: string, body: unknown): Promise<unknown> {
+  const request = (logseq.Request as unknown as {
+    _request<T>(options: Record<string, unknown>): Promise<T>;
+  });
+
+  const response = await withTimeout(
+    request._request<unknown>({
+      url,
+      method: "POST",
+      returnType: "text",
+      timeout: MCP_REQUEST_TIMEOUT_MS,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json, text/event-stream",
+      },
+      data: body as object,
+    }),
+    MCP_REQUEST_TIMEOUT_MS,
+    "MCP request timed out after 30 seconds.",
+  );
+  if (typeof response !== "string") return response;
+
+  return parseMcpResponseText(response);
+}
+
+async function requestMcpEndpointJson(url: string, body: unknown): Promise<unknown> {
+  return assertMcpSuccess(await requestMcpJson(url, body));
+}
+
+async function requestMcpNotification(url: string, body: unknown): Promise<void> {
+  try {
+    await requestMcpJson(url, body);
+  } catch {
+    // MCP notifications may return an empty body or no JSON response.
+  }
+}
+
+async function openMcpSseEndpoint(url: string): Promise<{ endpoint: string; close: () => void }> {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), MCP_REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "text/event-stream",
+      },
+      signal: controller.signal,
+    });
+
+    if (!response.ok || !response.body) {
+      throw new Error(`MCP SSE connection failed: HTTP ${response.status}`);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const endpoint = extractMcpSseEndpoint(url, buffer);
+      if (endpoint) {
+        window.clearTimeout(timeout);
+        return {
+          endpoint: endpoint.endpoint,
+          close: () => {
+            controller.abort();
+            void reader.cancel();
+          },
+        };
+      }
+    }
+
+    throw new Error("MCP SSE endpoint event was not received.");
+  } catch (error) {
+    window.clearTimeout(timeout);
+    controller.abort();
+    throw error;
+  }
+}
+
+async function withMcpEndpoint<T>(serviceUrl: string, callback: (endpoint: string) => Promise<T>): Promise<T> {
+  if (!isMcpSseUrl(serviceUrl)) {
+    return callback(serviceUrl);
+  }
+
+  const transport = await openMcpSseEndpoint(serviceUrl);
+  try {
+    await requestMcpEndpointJson(transport.endpoint, buildMcpInitializeRequest(1));
+    await requestMcpNotification(transport.endpoint, buildMcpInitializedNotification());
+    return await callback(transport.endpoint);
+  } finally {
+    transport.close();
+  }
+}
+
+function parseMcpResponseText(text: string): unknown {
+  const trimmed = text.trim();
+  if (!trimmed) throw new Error("MCP service returned an empty response.");
+  if (trimmed.startsWith("{") || trimmed.startsWith("[")) return JSON.parse(trimmed);
+
+  const dataLines = trimmed
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("data:"))
+    .map((line) => line.slice(5).trim())
+    .filter((line) => line && line !== "[DONE]");
+  const jsonLine = [...dataLines].reverse().find((line: string) => line.startsWith("{") || line.startsWith("["));
+  if (jsonLine) return JSON.parse(jsonLine);
+
+  throw new Error("MCP service did not return JSON.");
+}
+
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
 
@@ -692,11 +942,82 @@ async function analyzeDownloadedPage(page: DownloadedPage, settings: PluginSetti
 
 function openKnowledgeChatDialog() {
   currentChatTurns = [];
+  lastChatSearchContext = null;
+  activeMcpServiceIds = new Set(parseMcpServices(currentSettings().mcpServices).filter((service) => service.enabled).map((service) => service.id));
   logseq.provideModel({
     askKnowledgeBase: askKnowledgeBaseFromDialog,
     closeIngestModal: closeMainUi,
   });
   renderMainUi(chatDialogTemplate(currentChatTurns));
+}
+
+function openMcpManagerDialog() {
+  logseq.provideModel({
+    addMcpService: addMcpServiceFromDialog,
+    toggleMcpService: toggleMcpServiceFromDialog,
+    deleteMcpService: deleteMcpServiceFromDialog,
+    closeIngestModal: closeMainUi,
+  });
+  renderMainUi(mcpManagerTemplate());
+}
+
+async function saveMcpServices(services: ReturnType<typeof parseMcpServices>) {
+  const normalized = parseMcpServices(services);
+  logseq.updateSettings({ mcpServices: normalized });
+  activeMcpServiceIds = new Set([...activeMcpServiceIds].filter((id) => services.some((service) => service.id === id && service.enabled)));
+}
+
+async function addMcpServiceFromDialog() {
+  const nameInput = document.querySelector<HTMLInputElement>("#llm-wiki-mcp-name-input");
+  const urlInput = document.querySelector<HTMLInputElement>("#llm-wiki-mcp-url-input");
+
+  try {
+    const service = createMcpService({
+      name: nameInput?.value ?? "",
+      url: urlInput?.value ?? "",
+      enabled: true,
+    });
+    const services = parseMcpServices(currentSettings().mcpServices).filter((item) => item.id !== service.id);
+    services.push(service);
+    await saveMcpServices(services);
+    renderMainUi(mcpManagerTemplate(services));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    await logseq.UI.showMsg(message, "error");
+  }
+}
+
+async function toggleMcpServiceFromDialog(event: Event) {
+  const serviceId = readServiceId(event);
+  if (!serviceId) return;
+  const services = parseMcpServices(currentSettings().mcpServices).map((service) =>
+    service.id === serviceId ? { ...service, enabled: !service.enabled } : service,
+  );
+  await saveMcpServices(services);
+  renderMainUi(mcpManagerTemplate(services));
+}
+
+async function deleteMcpServiceFromDialog(event: Event) {
+  const serviceId = readServiceId(event);
+  if (!serviceId) return;
+  const services = parseMcpServices(currentSettings().mcpServices).filter((service) => service.id !== serviceId);
+  await saveMcpServices(services);
+  renderMainUi(mcpManagerTemplate(services));
+}
+
+function toggleChatMcpService(event: Event) {
+  const serviceId = readServiceId(event);
+  if (!serviceId) return;
+  if (activeMcpServiceIds.has(serviceId)) {
+    activeMcpServiceIds.delete(serviceId);
+  } else {
+    activeMcpServiceIds.add(serviceId);
+  }
+  renderMainUi(chatDialogTemplate(currentChatTurns));
+}
+
+function readServiceId(event: Event): string | null {
+  return (event.target as HTMLElement).closest<HTMLElement>("[data-service-id]")?.dataset.serviceId ?? null;
 }
 
 function pageDisplayName(page: PageEntity): string {
@@ -789,30 +1110,141 @@ async function retrieveKnowledgeSnippets(question: string): Promise<KnowledgeSni
     .map(({ score: _score, ...snippet }) => snippet);
 }
 
-async function answerKnowledgeQuestion(question: string, settings: PluginSettings): Promise<{ answer: string; sources: string[] }> {
+async function searchMcpServices(question: string, settings: PluginSettings): Promise<McpSearchResult[]> {
+  const text = uiText(settings);
+  const services = parseMcpServices(settings.mcpServices).filter((service) => service.enabled && activeMcpServiceIds.has(service.id));
+  const results: McpSearchResult[] = [];
+
+  for (const service of services.slice(0, 4)) {
+    try {
+      await withMcpEndpoint(service.url, async (endpoint) => {
+        const toolsResponse = await requestMcpEndpointJson(endpoint, buildMcpToolsListRequest(2));
+        const tools = extractMcpTools(toolsResponse);
+        const tool = chooseSearchTool(tools);
+        if (!tool) {
+          const available = tools.length
+            ? `${text.availableMcpTools}: ${tools.map((item) => item.name).join(", ")}`
+            : "";
+          results.push({
+            serviceId: service.id,
+            serviceName: service.name,
+            title: text.noSearchToolTitle,
+            content: available ? `${text.noSearchToolContent} ${available}` : text.noSearchToolContent,
+          });
+          return;
+        }
+
+        const searchResponse = await requestMcpEndpointJson(endpoint, buildMcpToolCallRequest(3, tool.name, question));
+        const serviceResults = extractMcpSearchResults(service, searchResponse);
+        results.push(...serviceResults);
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      results.push({
+        serviceId: service.id,
+        serviceName: service.name,
+        title: text.mcpSearchErrorTitle,
+        content: message,
+      });
+    }
+  }
+
+  return results.slice(0, 8);
+}
+
+async function answerKnowledgeQuestion(
+  question: string,
+  settings: PluginSettings,
+): Promise<{ answer: string; localSnippets: KnowledgeSnippet[]; mcpResults: McpSearchResult[] }> {
   const llmConfig = resolveLlmConfig(settings);
   validateLlmConfig(llmConfig);
 
   const snippets = await retrieveKnowledgeSnippets(question);
+  const mcpResults = await searchMcpServices(question, settings);
+  lastChatSearchContext = {
+    question,
+    localSnippets: snippets,
+    mcpResults,
+  };
   const requestBody = buildKnowledgeChatRequest({
     model: llmConfig.model,
     question,
     snippets,
+    mcpResults,
     primaryLanguage: settings.primaryLanguage,
   });
   const response = await requestJson(llmConfig.endpoint, llmConfig.apiKey, requestBody);
 
   return {
     answer: extractChatContent(response),
-    sources: snippets.map((snippet) => snippet.pageName),
+    localSnippets: snippets,
+    mcpResults,
   };
 }
 
+async function saveLastSearchContext(settings: PluginSettings) {
+  if (!lastChatSearchContext || (!lastChatSearchContext.localSnippets.length && !lastChatSearchContext.mcpResults.length)) {
+    await logseq.UI.showMsg(uiText(settings).noPreviousSearchContext, "warning");
+    return;
+  }
+
+  const llmConfig = resolveLlmConfig(settings);
+  validateLlmConfig(llmConfig);
+  const sourceUrl = `llm-wiki://chat-search/${todayIso()}/${encodeURIComponent(lastChatSearchContext.question.slice(0, 80))}`;
+  const rawText = [
+    `Question: ${lastChatSearchContext.question}`,
+    "",
+    "Local knowledge snippets:",
+    ...lastChatSearchContext.localSnippets.map((snippet) => `[[${snippet.pageName}]]\n${snippet.content}`),
+    "",
+    "MCP search results:",
+    ...lastChatSearchContext.mcpResults.map((result) => {
+      const url = result.url ? `\nURL: ${result.url}` : "";
+      return `${result.serviceName} / ${result.title}${url}\n${result.content}`;
+    }),
+  ].join("\n\n");
+
+  const requestBody = buildSearchSaveRequest({
+    model: llmConfig.model,
+    question: lastChatSearchContext.question,
+    localSnippets: lastChatSearchContext.localSnippets,
+    mcpResults: lastChatSearchContext.mcpResults,
+    primaryLanguage: settings.primaryLanguage,
+  });
+  const response = await requestJson(llmConfig.endpoint, llmConfig.apiKey, requestBody);
+  currentDownloadedPage = {
+    url: sourceUrl,
+    title: `Chat search: ${lastChatSearchContext.question}`,
+    text: rawText,
+  };
+  const preview = await buildWikiPreview(extractChatContent(response), sourceUrl, settings);
+  await applyWikiPreview(preview);
+  currentDownloadedPage = null;
+}
+
 async function askKnowledgeBaseFromDialog() {
+  const settings = currentSettings();
+  const text = uiText(settings);
   const input = document.querySelector<HTMLTextAreaElement>("#llm-wiki-chat-input");
   const question = input?.value.trim() ?? "";
   if (!question) {
-    await logseq.UI.showMsg("Enter a question first.", "warning");
+    await logseq.UI.showMsg(text.enterQuestionFirst, "warning");
+    return;
+  }
+
+  if (question === "/save") {
+    currentChatTurns.push({ role: "user", content: question });
+    renderMainUi(chatDialogTemplate(currentChatTurns, true));
+    try {
+      await saveLastSearchContext(settings);
+      currentChatTurns.push({ role: "assistant", content: text.savedSearchContext });
+      renderMainUi(chatDialogTemplate(currentChatTurns));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      currentChatTurns.push({ role: "assistant", content: `${text.errorPrefix}: ${message}` });
+      renderMainUi(chatDialogTemplate(currentChatTurns));
+      await logseq.UI.showMsg(message, "error");
+    }
     return;
   }
 
@@ -820,12 +1252,17 @@ async function askKnowledgeBaseFromDialog() {
   renderMainUi(chatDialogTemplate(currentChatTurns, true));
 
   try {
-    const result = await answerKnowledgeQuestion(question, currentSettings());
-    currentChatTurns.push({ role: "assistant", content: result.answer, sources: result.sources });
+    const result = await answerKnowledgeQuestion(question, settings);
+    currentChatTurns.push({
+      role: "assistant",
+      content: result.answer,
+      localSources: result.localSnippets.map((snippet) => snippet.pageName),
+      mcpSources: result.mcpResults.map((result) => `${result.serviceName}: ${result.title}`),
+    });
     renderMainUi(chatDialogTemplate(currentChatTurns));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    currentChatTurns.push({ role: "assistant", content: `Error: ${message}` });
+    currentChatTurns.push({ role: "assistant", content: `${text.errorPrefix}: ${message}` });
     renderMainUi(chatDialogTemplate(currentChatTurns));
     await logseq.UI.showMsg(message, "error");
   }
@@ -870,6 +1307,7 @@ function openToolbarMenu(event?: unknown) {
   logseq.provideModel({
     openUrlDialog,
     openKnowledgeChatDialog,
+    openMcpManagerDialog,
     togglePrimaryLanguage,
     closeIngestModal: closeMainUi,
   });
@@ -1055,6 +1493,26 @@ function injectStyles() {
       padding: 12px;
     }
 
+    .llm-wiki-mcp-chat-bar {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .llm-wiki-mcp-toggle {
+      background: #ffffff;
+      border-color: #d1d5db;
+      color: #111827;
+    }
+
+    .llm-wiki-mcp-toggle.is-active {
+      background: #065f46;
+      border-color: #065f46;
+      color: #ffffff;
+    }
+
     .llm-wiki-chat-empty,
     .llm-wiki-chat-loading {
       color: #6b7280;
@@ -1120,6 +1578,45 @@ function injectStyles() {
 
     .llm-wiki-change-list li {
       margin: 8px 0;
+    }
+
+    .llm-wiki-mcp-form {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: minmax(120px, 0.7fr) minmax(220px, 1.3fr) auto;
+    }
+
+    .llm-wiki-mcp-list {
+      display: grid;
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      max-height: min(42vh, 360px);
+      overflow: auto;
+      padding: 0;
+    }
+
+    .llm-wiki-mcp-row {
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .llm-wiki-mcp-url {
+      color: #6b7280;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .llm-wiki-mcp-actions {
+      display: flex;
+      flex-shrink: 0;
+      gap: 6px;
     }
 
     .llm-wiki-modal button {
@@ -1203,6 +1700,18 @@ function injectStyles() {
     .llm-wiki-floating-menu button:hover {
       background: #f3f4f6;
     }
+
+    @media (max-width: 640px) {
+      .llm-wiki-mcp-form,
+      .llm-wiki-mcp-row {
+        grid-template-columns: 1fr;
+      }
+
+      .llm-wiki-mcp-row {
+        align-items: stretch;
+        display: grid;
+      }
+    }
   `;
 
   logseq.provideStyle(styles);
@@ -1249,6 +1758,11 @@ async function main() {
     openToolbarMenu: (event?: unknown) => openToolbarMenu(event),
     openUrlDialog,
     openKnowledgeChatDialog,
+    openMcpManagerDialog,
+    addMcpService: addMcpServiceFromDialog,
+    toggleMcpService: toggleMcpServiceFromDialog,
+    deleteMcpService: deleteMcpServiceFromDialog,
+    toggleChatMcpService,
     togglePrimaryLanguage,
     askKnowledgeBase: askKnowledgeBaseFromDialog,
     analyzeUrlFromDialog,
