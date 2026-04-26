@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GSD 2 扩展框架 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>GSD 2 扩展框架</h1>
+          <ul>
+  <li>扩展框架<br />
+source-url:: https://github.com/gsd-build/gsd-2/blob/main/README.md<br />
+raw:: <a href="llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github.html">llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github</a><br />
+confidence-score:: 0.85<br />
+status:: current
+    <ul>
+      <li><strong>扩展生命周期命令</strong>：</li>
+      <li><code>gsd extensions install / update / uninstall / list / info / validate</code></li>
+      <li>支持 npm 包、Git 仓库和本地目录作为来源。</li>
+    </ul>
+  </li>
+  <li><strong>加载机制</strong>：
+    <ul>
+      <li>使用 <a href="Kahn 算法.html">Kahn 算法</a> 进行拓扑排序，确保依赖顺序。</li>
+      <li>加载警告被显式报告，而非静默失败。</li>
+    </ul>
+  </li>
+  <li><strong>解耦</strong>：
+    <ul>
+      <li><code>cmux</code> 和 <code>gsd</code> 之间的静态导入被替换为事件驱动架构。</li>
+    </ul>
+  </li>
+  <li><strong>参考扩展</strong>：<code>@gsd-extensions/google-search</code> 作为第一个从核心分离的扩展。</li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="GSD 2 v2.78.html">GSD 2 v2.78</a></li>
+  <li><a href="llm-wiki___index.html">llm-wiki___index</a></li>
+  <li><a href="llm-wiki___log.html">llm-wiki___log</a></li>
+  <li><a href="llm-wiki___raw___2026-04-26-生态循环多源搜索.html">llm-wiki___raw___2026-04-26-生态循环多源搜索</a></li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

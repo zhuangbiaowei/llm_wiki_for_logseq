@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GSD 2 工作树 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>GSD 2 工作树</h1>
+          <ul>
+  <li>工作树生命周期<br />
+source-url:: https://github.com/gsd-build/gsd-2/blob/main/README.md<br />
+raw:: <a href="llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github.html">llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github</a><br />
+confidence-score:: 0.85<br />
+status:: current
+    <ul>
+      <li>工作树 (Worktree) 是 GSD 2 中管理隔离开发环境的概念，类似 Git 工作树但带有生命周期管理。</li>
+    </ul>
+  </li>
+  <li><strong>碰撞节奏控制</strong>：通过 <code>git.collapse_cadence</code> 设置 <code>milestone</code> 或 <code>slice</code>，控制在验证后立即将切片合并到主干。</li>
+  <li><strong>遥测事件</strong>：记录 <code>worktree-created</code>、<code>worktree-merged</code>、<code>worktree-orphaned</code> 等事件，用于取证。</li>
+  <li><strong>取证命令</strong>：<code>/gsd forensics worktree</code> 显示孤儿分支、合并耗时、冲突等异常。</li>
+  <li>关键改进
+    <ul>
+      <li><strong>孤儿审计</strong>：中断的里程碑如果已有提交，不再跳过，而是发出警告。</li>
+    </ul>
+  </li>
+  <li><strong>里程碑根目录解析</strong>：验证器通过活动工作树读取状态，避免读取过时项目根。</li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><a href="GSD 2 v2.78.html">GSD 2 v2.78</a></li>
+  <li><a href="llm-wiki___index.html">llm-wiki___index</a></li>
+  <li><a href="llm-wiki___log.html">llm-wiki___log</a></li>
+  <li><a href="llm-wiki___raw___2026-04-26-生态循环多源搜索.html">llm-wiki___raw___2026-04-26-生态循环多源搜索</a></li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>llm-wiki___raw___2026-04-26-生态循环多源搜索 - LLM Wiki</title>
+    <link href="./assets/site.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a href="index.html" class="brand">LLM Wiki</a>
+        <nav>
+          <a href="index.html">Journals</a>
+          <a href="pages.html">Pages</a>
+          <a href="kg.html">Graph</a>
+        </nav>
+      </header>
+      <main class="content">
+        <article class="entry">
+          <h1>llm-wiki___raw___2026-04-26-生态循环多源搜索</h1>
+          <p>knowledge-layer:: raw<br />
+source-url:: llm-wiki://chat-search/2026-04-26/%E6%90%9C%E7%B4%A2%E7%94%9F%E6%80%81%E5%BE%AA%E7%8E%AF<br />
+collected:: 2026-04-26<br />
+published:: Unknown</p>
+
+<ul>
+  <li>Source: llm-wiki://chat-search/2026-04-26/%E6%90%9C%E7%B4%A2%E7%94%9F%E6%80%81%E5%BE%AA%E7%8E%AF</li>
+  <li>Collected: 2026-04-26</li>
+  <li>Published: Unknown</li>
+  <li>Question: 搜索生态循环</li>
+  <li>Local knowledge snippets:</li>
+  <li><a href="循环深度Transformer.html">循环深度Transformer</a></li>
+  <li>knowledge-layer:: wiki</li>
+  <li>topic:: 人工智能架构</li>
+  <li>核心概念</li>
+  <li>source-url:: https://mp.weixin.qq.com/s/NRVA4sDsz6hgde4RB_DXeQ</li>
+  <li>raw:: <a href="llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建.html">llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建</a></li>
+  <li>confidence-score:: 0.85</li>
+  <li>status:: current</li>
+  <li>循环深度Transformer（Recurrent-Depth Transformer, RDT），也称为循环Transformer（Looped Transformer, LT）。</li>
+  <li><a href="Claude Mythos.html">Claude Mythos</a></li>
+  <li><a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></li>
+  <li>相关概念</li>
+  <li><a href="Parcae架构.html">Parcae架构</a></li>
+  <li><strong>参数效率</strong>：一个k层、循环L次的模型，能达到kL层非循环模型的质量，而只需k层的参数量。内存占用不随推理深度增长；推理时计算量随循环数而非模型大小扩展。</li>
+  <li><strong>潜在思维作为隐式CoT</strong>：每次循环迭代在功能上等价于链式思维的一步，但在连续潜在空间而非token空间中运行。运行T次循环的模型隐式模拟了T步CoT推理。</li>
+  <li>连续潜在思维可以同时编码多个候选的下一步，使模型在收敛前能在推理空间中进行类似广度优先搜索的探索。</li>
+  <li><strong>深度外推</strong>：在5步推理链上训练，用10步推理链测试，普通Transformer失败，循环Transformer成功——通过在推理时运行更多循环来实现。推理时循环数更多 = 推理链更深 = 解决更难的问题。</li>
+  <li>优势</li>
+  <li><strong>系统性泛化</strong>：普通Transformer无法以训练时从未见过的方式组合知识，而循环Transformer可以。这种能力通过一个三阶段grokking过程涌现：记忆 → 分布内泛化 → 系统性泛化（突然涌现，而非渐进式出现）。</li>
+  <li><strong>Coda（尾声层）</strong>：标准Transformer层，只运行一次。</li>
+  <li><strong>Recurrent Block（循环块）</strong>：被循环T次，每次迭代以隐藏状态h和输入注入e进行更新。</li>
+  <li>更新规则：<code>h_{t+1} = A·h_t + B·e + Transformer(h_t, e)</code></li>
+  <li>将输入注入e在每一步注入，是防止模型“漂移”的机制，使原始输入信号在整个循环深度中保持存活。</li>
+  <li><strong>Prelude（前奏层）</strong>：标准Transformer层，只运行一次。</li>
+  <li>架构组成</li>
+  <li>一个典型的循环深度Transformer结构分为三个功能模块：</li>
+  <li>所有推理都在<strong>单次前向传播中静默完成</strong>，在连续的潜在空间中进行。</li>
+  <li>没有中间token输出。</li>
+  <li>与链式思维（CoT）的区别</li>
+  <li><strong>不是</strong>链式思维（Chain-of-Thought）。</li>
+  <li>权重相同，但循环更多，思考更深。</li>
+  <li>核心思想：不是通过堆叠数百个独立层来实现深度，而是<strong>复用同一组层</strong>，在每次前向传播中<strong>运行多次</strong>。</li>
+  <li><a href="AI开源生态.html">AI开源生态</a></li>
+  <li>knowledge-layer:: wiki</li>
+  <li>topic:: AI开源生态</li>
+  <li>报告概述</li>
+  <li>source-url:: https://mp.weixin.qq.com/s/D_YEiFbDk2u3jxprNhPwiQ</li>
+  <li>raw:: <a href="llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施.html">llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施</a></li>
+  <li>confidence-score:: 0.85</li>
+  <li>status:: current</li>
+  <li>基于超万名真实用户样本，系统梳理开源技术如何重塑全球创新路径和深化协同。</li>
+  <li>生态数据</li>
+  <li>基于<a href="魔搭社区.html">魔搭社区</a>超2500万全球用户、17万开源模型、3万数据集与1000+机构的生态。</li>
+  <li>公益领域应用，如<a href="AI向善.html">AI向善</a>，包括银发群体、教育普惠等场景。</li>
+  <li>产业实践</li>
+  <li>提效工具类应用已成为AI落地的主阵地，八成开发者借助开源生态获得工作机会或收入。</li>
+  <li>开源安全：开源并非安全的对立面，而是提升整体安全水位的核心机制；53.9%受访者将“信任建立”视为开源首要价值。</li>
+  <li>中国开发者从全球AI开源生态的跟随者转型为引领者，以<a href="千问系列大模型.html">千问系列大模型</a>为例。</li>
+  <li>创新成本下降，催生“一人公司”作为AI时代新兴创业范式。</li>
+  <li>关键发现</li>
+  <li>从传统的Open Source迈向Open Resource：模型权重、训练方法与工具链全面开放，降低创新门槛。</li>
+  <li>指出AI开源正从少数机构的技术共享，全面演进为全社会可参与的公共创新基础设施。</li>
+  <li><a href="llm-wiki/index.html">llm-wiki/index</a></li>
+  <li>knowledge-layer:: spine</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-23 摄入</td>
+          <td>苏联海军</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="苏联海军.html">苏联海军</a></td>
+          <td>苏联的海军部队，在冷战期间扮演重要战略角色，常被称为红海军。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="苏联海军航空兵.html">苏联海军航空兵</a></td>
+          <td>苏联海军的航空兵部队，负责海上航空支援和作战。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="苏联海军步兵.html">苏联海军步兵</a></td>
+          <td>苏联海军的海军步兵部队，执行两栖作战和陆地任务。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="波罗的海舰队.html">波罗的海舰队</a></td>
+          <td>苏联海军在波罗的海的主要舰队，基于列宁格勒。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="黑海舰队.html">黑海舰队</a></td>
+          <td>苏联海军在黑海的主要舰队，基于塞瓦斯托波尔。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="北方舰队.html">北方舰队</a></td>
+          <td>苏联海军在北极地区的主要舰队，基于科拉湾。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="太平洋舰队.html">太平洋舰队</a></td>
+          <td>苏联海军在太平洋的主要舰队，负责远东和太平洋海域。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="里海区舰队.html">里海区舰队</a></td>
+          <td>苏联海军在里海的小型舰队，负责内陆海域行动。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="第5中队.html">第5中队</a></td>
+          <td>苏联海军在地中海的任务舰队，用于力量投射。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="阿芙乐尔号巡洋舰.html">阿芙乐尔号巡洋舰</a></td>
+          <td>沙俄和苏联的巡洋舰，在十月革命中扮演关键角色，被视为苏联海军的第一艘船。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="谢尔盖·戈尔什科夫.html">谢尔盖·戈尔什科夫</a></td>
+          <td>苏联海军舰队上将，长期领导苏联海军，推动其现代化和扩张。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="尼古拉·库兹涅佐夫.html">尼古拉·库兹涅佐夫</a></td>
+          <td>苏联海军舰队上将，曾任海军总司令，参与二战和冷战初期海军建设。</td>
+          <td>2026-04-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>人工智能架构</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="循环深度Transformer.html">循环深度Transformer</a></td>
+          <td>一种通过复用同一组Transformer层并循环多次来实现深度推理的架构。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="Parcae架构.html">Parcae架构</a></td>
+          <td>一种通过构造保证训练稳定性的循环Transformer架构，被认为是Claude Mythos可能采用的方案。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></td>
+          <td>一种允许模型根据输入复杂度动态调整内部计算步数（循环次数）的机制。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="Claude Mythos.html">Claude Mythos</a></td>
+          <td>Anthropic发布的高性能AI模型，其具体架构未公开，被推测为基于循环深度Transformer和混合专家系统。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="OpenMythos.html">OpenMythos</a></td>
+          <td>一个对Claude Mythos架构进行理论性开源重建的项目，基于第一性原理和现有研究文献构建。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>AI开源生态</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="AI开源生态.html">AI开源生态</a></td>
+          <td>AI开源从技术共享演进为公共创新基础设施，基于魔搭社区万人调研报告。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="魔搭社区.html">魔搭社区</a></td>
+          <td>阿里巴巴旗下的AI模型开源社区，发布AI开源生态调研报告。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="千问系列大模型.html">千问系列大模型</a></td>
+          <td>通义千问开源大模型系列，全球下载量超10亿次，衍生模型超20万个。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="AI向善.html">AI向善</a></td>
+          <td>AI技术在公益领域的应用，如助盲眼镜、跌倒检测系统，促进技术平权。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>人工智能与社会</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="AI资源动态分配.html">AI资源动态分配</a></td>
+          <td>AI系统会根据用户认知水平动态分配算力与模型版本，形成一种新的资源分配机制。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="AI认知复利.html">AI认知复利</a></td>
+          <td>高手与普通人使用AI时产生的效率差距会因正反馈循环而指数级扩大。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="写作作为核心能力.html">写作作为核心能力</a></td>
+          <td>在AI时代，清晰的写作能力是榨取AI高级算力、进行深度思考和有效沟通的终极能力。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="人机交互模式.html">人机交互模式</a></td>
+          <td>AI系统为适应不同用户而采用的不同对话策略，包括共情附和模式与高手对决模式。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>开源合规</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="LGPL-2.1 许可证.html">LGPL-2.1 许可证</a></td>
+          <td>LGPL 2.1 是一种弱 Copyleft 许可证，允许商业软件通过动态链接等方式使用而不强制整个软件开源。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="动态链接与静态链接.html">动态链接与静态链接</a></td>
+          <td>动态链接和静态链接在使用 LGPL 代码时具有不同的合规义务。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="开源合规风险规避策略.html">开源合规风险规避策略</a></td>
+          <td>通过迁移至更宽松许可证的组件等方式彻底规避 LGPL 合规风险。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="开源合规审计.html">开源合规审计</a></td>
+          <td>开源办公室审计是识别组件许可证合规风险的重要环节。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>软件工程与AI Agent</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="Agent时代软件生产变革.html">Agent时代软件生产变革</a></td>
+          <td>Agent时代代码成为执行载体，软件生产民主化，思考媒介变为Goal、Context、Constraints。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="人机协同模式.html">人机协同模式</a></td>
+          <td>纯黑盒模式不可行，人需通过SPEC定义规范，组织Agent团队协作，使用高智商模型并大量消耗Token。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="软件形态进化.html">软件形态进化</a></td>
+          <td>软件从静态固定形态转向以意图为接口的灵活形态，Unix哲学复兴，生态向人端和机器端集中。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="未来软件抽象：Skill之后的Stack.html">未来软件抽象：Skill之后的Stack</a></td>
+          <td>Skill不是最终形态，未来将出现更复杂的抽象（如Stack），通过自然语言人机协同生成，可Debug和分发，核心是蒸馏人类专家知识。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><a href="黄东旭.html">黄东旭</a></td>
+          <td>TiDB联合创始人兼CTO，Agent Infra探索者，提出Agent时代软件生产、形态和未来抽象的核心观点。</td>
+          <td>2026-04-24</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>色情与科技</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>[[色情与</li>
+  <li>[Content truncated for analysis.]</li>
+  <li><a href="llm-wiki/log.html">llm-wiki/log</a></li>
+  <li>knowledge-layer:: spine</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-23 摄入</td>
+          <td>苏联海军</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-23-soviet-navy-wikipedia.html">llm-wiki/raw/2026-04-23-soviet-navy-wikipedia</a></li>
+  <li>新增: <a href="苏联海军.html">苏联海军</a></li>
+  <li>新增: <a href="苏联海军航空兵.html">苏联海军航空兵</a></li>
+  <li>新增: <a href="苏联海军步兵.html">苏联海军步兵</a></li>
+  <li>新增: <a href="波罗的海舰队.html">波罗的海舰队</a></li>
+  <li>新增: <a href="黑海舰队.html">黑海舰队</a></li>
+  <li>新增: <a href="北方舰队.html">北方舰队</a></li>
+  <li>新增: <a href="太平洋舰队.html">太平洋舰队</a></li>
+  <li>新增: <a href="里海区舰队.html">里海区舰队</a></li>
+  <li>新增: <a href="第5中队.html">第5中队</a></li>
+  <li>新增: <a href="阿芙乐尔号巡洋舰.html">阿芙乐尔号巡洋舰</a></li>
+  <li>新增: <a href="谢尔盖·戈尔什科夫.html">谢尔盖·戈尔什科夫</a></li>
+  <li>新增: <a href="尼古拉·库兹涅佐夫.html">尼古拉·库兹涅佐夫</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>循环深度Transformer</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建.html">llm-wiki/raw/2026-04-24-openmythos-claude-mythos-架构的开源理论重建</a></li>
+  <li>新增: <a href="循环深度Transformer.html">循环深度Transformer</a></li>
+  <li>新增: <a href="Parcae架构.html">Parcae架构</a></li>
+  <li>新增: <a href="自适应计算时间（ACT）.html">自适应计算时间（ACT）</a></li>
+  <li>新增: <a href="Claude Mythos.html">Claude Mythos</a></li>
+  <li>新增: <a href="OpenMythos.html">OpenMythos</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>AI开源生态</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施.html">llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施</a></li>
+  <li>新增: <a href="AI开源生态.html">AI开源生态</a></li>
+  <li>新增: <a href="魔搭社区.html">魔搭社区</a></li>
+  <li>新增: <a href="千问系列大模型.html">千问系列大模型</a></li>
+  <li>新增: <a href="AI向善.html">AI向善</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>AI资源动态分配</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-ai时代真正难以弥合的不平等.html">llm-wiki/raw/2026-04-24-ai时代真正难以弥合的不平等</a></li>
+  <li>新增: <a href="AI资源动态分配.html">AI资源动态分配</a></li>
+  <li>新增: <a href="AI认知复利.html">AI认知复利</a></li>
+  <li>新增: <a href="写作作为核心能力.html">写作作为核心能力</a></li>
+  <li>新增: <a href="人机交互模式.html">人机交互模式</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>LGPL-2.1 许可证</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险.html">llm-wiki/raw/2026-04-24-开源合规场景100问-第1问-使用lgpl代码被审计出风险-应如何规避风险</a></li>
+  <li>新增: <a href="LGPL-2.1 许可证.html">LGPL-2.1 许可证</a></li>
+  <li>新增: <a href="动态链接与静态链接.html">动态链接与静态链接</a></li>
+  <li>新增: <a href="开源合规风险规避策略.html">开源合规风险规避策略</a></li>
+  <li>新增: <a href="开源合规审计.html">开源合规审计</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>Agent时代软件生产变革</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-tidb-黄东旭-消耗了上百亿-token后-对于-agent-时代软件构建-软件形态及未来发展的思考.html">llm-wiki/raw/2026-04-24-tidb-黄东旭-消耗了上百亿-token后-对于-agent-时代软件构建-软件形态及未来发展的思考</a></li>
+  <li>新增: <a href="Agent时代软件生产变革.html">Agent时代软件生产变革</a></li>
+  <li>新增: <a href="人机协同模式.html">人机协同模式</a></li>
+  <li>新增: <a href="软件形态进化.html">软件形态进化</a></li>
+  <li>新增: <a href="未来软件抽象：Skill之后的Stack.html">未来软件抽象：Skill之后的Stack</a></li>
+  <li>新增: <a href="黄东旭.html">黄东旭</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>色情与科技的共生史</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-技术与色情的演进史.html">llm-wiki/raw/2026-04-24-技术与色情的演进史</a></li>
+  <li>新增: <a href="色情与科技的共生史.html">色情与科技的共生史</a></li>
+  <li>新增: <a href="Betamax vs VHS 格式战争.html">Betamax vs VHS 格式战争</a></li>
+  <li>新增: <a href="Pornhub.html">Pornhub</a></li>
+  <li>新增: <a href="区块链与色情产业.html">区块链与色情产业</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-24 摄入</td>
+          <td>技术与色情相互促进史</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-24-技术与色情的演进史.html">llm-wiki/raw/2026-04-24-技术与色情的演进史</a></li>
+  <li>新增: <a href="技术与色情相互促进史.html">技术与色情相互促进史</a></li>
+  <li>新增: <a href="VHS与Betamax格式之战.html">VHS与Betamax格式之战</a></li>
+  <li>新增: <a href="色情产业驱动在线支付.html">色情产业驱动在线支付</a></li>
+  <li>新增: <a href="色情产业对VR的推动作用.html">色情产业对VR的推动作用</a></li>
+  <li>新增: <a href="区块链在色情产业的应用.html">区块链在色情产业的应用</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-25 摄入</td>
+          <td>DeepSeek-V4</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-25-deepseek-v4-开源发布-这句荀子名言-可能是对质疑最好的回应.html">llm-wiki/raw/2026-04-25-deepseek-v4-开源发布-这句荀子名言-可能是对质疑最好的回应</a></li>
+  <li>新增: <a href="DeepSeek-V4.html">DeepSeek-V4</a></li>
+  <li>新增: <a href="CSA与HCA混合注意力架构.html">CSA与HCA混合注意力架构</a></li>
+  <li>新增: <a href="端然正己 - DeepSeek的技术哲学.html">端然正己 - DeepSeek的技术哲学</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-25 摄入</td>
+          <td>DeepSeek-V4</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-25-deepseek-v4-开源发布-这句荀子名言-可能是对质疑最好的回应.html">llm-wiki/raw/2026-04-25-deepseek-v4-开源发布-这句荀子名言-可能是对质疑最好的回应</a></li>
+  <li>新增: <a href="DeepSeek-V4.html">DeepSeek-V4</a></li>
+  <li>新增: <a href="CSA与HCA混合注意力架构.html">CSA与HCA混合注意力架构</a></li>
+  <li>新增: <a href="端然正己 - DeepSeek的技术哲学.html">端然正己 - DeepSeek的技术哲学</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-25 摄入</td>
+          <td>荀子</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-25-荀子-维基百科.html">llm-wiki/raw/2026-04-25-荀子-维基百科</a></li>
+  <li>新增: <a href="荀子.html">荀子</a></li>
+  <li>新增: <a href="不诱于誉，不恐于诽.html">不诱于誉，不恐于诽</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-25 摄入</td>
+          <td>孔子</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-25-孔子的介绍-多源综合.html">llm-wiki/raw/2026-04-25-孔子的介绍-多源综合</a></li>
+  <li>新增: <a href="孔子.html">孔子</a></li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>2026-04-26 摄入</td>
+          <td>GSD 2</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>原始素材: <a href="llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github.html">llm-wiki/raw/2026-04-26-gsd-2-readme-md-at-main-gsd-build-gsd-2-github</a></li>
+  <li>新增: <a href="GSD 2.html">GSD 2</a></li>
+  <li>新增: <a href="GSD 2 v2.78.html">GSD 2 v2.78</a></li>
+  <li>新增: <a href="GSD 2 工作树.html">GSD 2 工作树</a></li>
+  <li>新增: <a href="GSD 2 扩展框架.html">GSD 2 扩展框架</a></li>
+  <li><a href="魔搭社区.html">魔搭社区</a></li>
+  <li>社区角色</li>
+  <li>source-url:: https://mp.weixin.qq.com/s/D_YEiFbDk2u3jxprNhPwiQ</li>
+  <li>raw:: <a href="llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施.html">llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施</a></li>
+  <li>confidence-score:: 0.85</li>
+  <li>status:: current</li>
+  <li>AI模型开源社区，运营负责人为石洪竺。</li>
+  <li>强调AI开源生态将技术能力从私有资源转化为社会共创的公共能力。</li>
+  <li>报告发布</li>
+  <li>在2026世界互联网大会亚太峰会上正式发布报告，基于超万名高质量样本。</li>
+  <li>通过“小有可为”AI向善赛事等案例调研，推动生态发展。</li>
+  <li>生态规模</li>
+  <li>拥有超2500万全球用户、17万开源模型、3万数据集与1000+机构参与。</li>
+  <li>发布《AI开源生态的全球价值与实践探索》报告，被纳入世界互联网大会智库合作计划系列成果。</li>
+  <li><a href="千问系列大模型.html">千问系列大模型</a></li>
+  <li>模型概况</li>
+  <li>source-url:: https://mp.weixin.qq.com/s/D_YEiFbDk2u3jxprNhPwiQ</li>
+  <li>raw:: <a href="llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施.html">llm-wiki/raw/2026-04-24-魔搭社区发布业界首份ai开源生态万人调研报告-开源已成ai创新关键基础设施</a></li>
+  <li>confidence-score:: 0.85</li>
+  <li>status:: current</li>
+  <li>千问（Qwen）系列大模型，支持200多种语言。</li>
+  <li>相关数据</li>
+  <li>基于<a href="魔搭社区.html">魔搭社区</a>的生态支持，成为开源创新的关键案例。</li>
+  <li>体现AI技术的全球化传播演变为多节点共振、协同迭代的生态网络。</li>
+  <li>生态影响</li>
+  <li>代表中国开发者在<a href="AI开源生态.html">AI开源生态</a>中从跟随者转型为引领者。</li>
+  <li>全球累计下载量突破10亿次，衍生模型超20万个。</li>
+  <li>MCP search results:</li>
+  <li>all / 加入欧纷泰关于生态循环的网络研讨会</li>
+  <li>URL: https://www.inventec.dehon.com/zh-hans/%E5%8A%A0%E5%85%A5%E8%8B%B1%E4%B8%9A%E8%BE%BE%E5%8F%82%E5%8A%A0%E5%85%B3%E4%BA%8E%E7%94%9F%E6%80%81%E5%BE%AA%E7%8E%AF%E7%9A%84%E7%BD%91%E7%BB%9C%E7%A0%94%E8%AE%A8%E4%BC%9A/</li>
+  <li>Dec 3, 2021 … 欧纷泰遵循生态循环方法提供的Ecoprogram 服务，可对受污染的氟化溶剂进行回收和修复。 这项生态计划可减少高科技清洁过程对环境的影响，同时还可以推动循环 …</li>
+  <li>all / 我应该多久换一次水箱的过滤器，才能不影响生态循环？ : r/Aquariums</li>
+  <li>URL: https://www.reddit.com/r/Aquariums/comments/1cbnnn3/how_oftenhow_should_i_change_my_tanks_filter/?tl=zh-hans</li>
+  <li>Apr 24, 2024 … 关闭搜索. r/Aquariums. 打开菜单 … 我应该多久换一次水箱的过滤器，才能不影响生态循环？ Help/Advice. 刚买了一个水箱，里面有一个beta 鱼和几个 …</li>
+  <li>all / 增城区中新现代生态循环农业产业示范园（二期）农业设施项目</li>
+  <li>URL: http://www.zc.gov.cn/jg/gzsygbmpcjg/sghhzrzyjzcqfj/ssnydhtdfkzl/content/post_10396827.html</li>
+  <li>搜索框. 广州市政府. 简体 繁体 English · 首页 · 走进增城 · 新闻中心 · 政务公开 · 政务服务 … 增城区中新现代生态循环农业产业示范园（二期）农业设施项目. 2025-08-12 …</li>
+  <li>all / 在添加生物群之前，有必要循环一个生态箱吗？ : r/isopods - Reddit</li>
+  <li>URL: https://www.reddit.com/r/isopods/comments/1fb8mux/is_it_necessary_to_cycle_an_enclosure_before/?tl=zh-hans</li>
+  <li>Sep 7, 2024 … … 进行投票。 赞同 3 反对 3 转到评论 共享. 排序方式： 最佳. 打开评论排序选项. 最佳. 点赞最多. 新. 有争议. 旧. 问答. 搜索评论 展开评论搜索. 取消 …</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>all / 环保佳一点</td>
+          <td>瑞典生态城模式烟台闪亮登场 - EEAS</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>URL: https://www.eeas.europa.eu/delegations/china/%E7%8E%AF%E4%BF%9D%E4%BD%B3%E4%B8%80%E7%82%B9-%E7%91%9E%E5%85%B8%E7%94%9F%E6%80%81%E5%9F%8E%E6%A8%A1%E5%BC%8F%E7%83%9F%E5%8F%B0%E9%97%AA%E4%BA%AE%E7%99%BB%E5%9C%BA_zh-hans</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>搜索. Search. From. To. Breadcrumb. EEAS · China; 环保佳一点</td>
+          <td>瑞典 … 联盟参考了哈马碧城的绿色理念体系，通过建立水、废弃物和能源的生态循环，在中国建设可持续社区。</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+        </article>
+      </main>
+    </div>
+    <script src="./tree.js"></script>
+  </body>
+</html>
