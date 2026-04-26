@@ -35,6 +35,18 @@ describe("blocks", () => {
     ]);
   });
 
+  it("keeps GitHub issue references from becoming Logseq tag pages", () => {
+    const blocks = markdownToBlocks(
+      "- Security hardening (#4023)\n- See #3658, #3730 and issue #99.\n- Keep URL fragments like https://example.com/a#section unchanged.",
+    );
+
+    expect(blocks).toEqual([
+      { content: "Security hardening (issue 4023)" },
+      { content: "See issue 3658, issue 3730 and issue 99." },
+      { content: "Keep URL fragments like https://example.com/a#section unchanged." },
+    ]);
+  });
+
   it("appends metadata as sibling blocks", () => {
     expect(appendMetadataBlocks([{ content: "A" }], { status: "current" })).toEqual([
       { content: "A", properties: { status: "current" } },

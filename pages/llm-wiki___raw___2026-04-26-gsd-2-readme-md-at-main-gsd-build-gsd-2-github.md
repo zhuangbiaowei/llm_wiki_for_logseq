@@ -1,0 +1,328 @@
+knowledge-layer:: raw
+source-url:: https://github.com/gsd-build/gsd-2/blob/main/README.md
+collected:: 2026-04-26
+published:: Unknown
+
+- Source: https://github.com/gsd-build/gsd-2/blob/main/README.md
+- Collected: 2026-04-26
+- Published: Unknown
+- gsd-2/README.md at main · gsd-build/gsd-2 · GitHub
+- Skip to content
+- Navigation Menu
+- Toggle navigation
+- Sign in
+- Appearance settings
+- Platform AI CODE CREATION GitHub Copilot Write better code with AI
+- GitHub Spark Build and deploy intelligent apps
+- GitHub Models Manage and compare prompts
+- MCP Registry New Integrate external tools
+- DEVELOPER WORKFLOWS Actions Automate any workflow
+- Codespaces Instant dev environments
+- Issues Plan and track work
+- Code Review Manage code changes
+- APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities
+- Code security Secure your code as you build
+- Secret protection Stop leaks before they start
+- EXPLORE Why GitHub
+- Documentation
+- Blog
+- Changelog
+- Marketplace
+- View all features
+- Solutions BY COMPANY SIZE Enterprises
+- Small and medium teams
+- Startups
+- Nonprofits
+- BY USE CASE App Modernization
+- DevSecOps
+- DevOps
+- CI/CD
+- View all use cases
+- BY INDUSTRY Healthcare
+- Financial services
+- Manufacturing
+- Government
+- View all industries
+- View all solutions
+- Resources EXPLORE BY TOPIC AI
+- Software Development
+- DevOps
+- Security
+- View all topics
+- EXPLORE BY TYPE Customer stories
+- Events & webinars
+- Ebooks & reports
+- Business insights
+- GitHub Skills
+- SUPPORT & SERVICES Documentation
+- Customer support
+- Community forum
+- Trust center
+- Partners
+- View all resources
+- Open Source COMMUNITY GitHub Sponsors Fund open source developers
+- PROGRAMS Security Lab
+- Maintainer Community
+- Accelerator
+- GitHub Stars
+- Archive Program
+- REPOSITORIES Topics
+- Trending
+- Collections
+- Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform
+- AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features
+- Copilot for Business Enterprise-grade AI features
+- Premium Support Enterprise-grade 24/7 support
+- Pricing
+- Search or jump to...
+- Search code, repositories, users, issues, pull requests...
+- Search
+- Clear
+- Search syntax tips
+- Provide feedback
+- We read every piece of feedback, and take your input very seriously.
+- Include my email address so I can be contacted
+- Cancel
+- Submit feedback
+- Saved searches
+- Use saved searches to filter your results more quickly
+- Name
+- Query
+- To see all available qualifiers, see our documentation .
+- Cancel
+- Create saved search
+- Sign in
+- Sign up
+- Appearance settings
+- Resetting focus
+- You signed in with another tab or window. Reload to refresh your session.
+- You signed out in another tab or window. Reload to refresh your session.
+- You switched accounts on another tab or window. Reload to refresh your session.
+- Dismiss alert
+- {{ message }}
+- gsd-build
+- /
+- gsd-2
+- Public
+- Uh oh!
+- There was an error while loading. Please reload this page .
+- Notifications
+- You must be signed in to change notification settings
+- Fork
+- 676
+- Star
+- 6.6k
+- Code
+- Issues
+- 179
+- Pull requests
+- 52
+- Discussions
+- Actions
+- Projects
+- Security and quality
+- 0
+- Insights
+- Additional navigation options
+- Code
+- Issues
+- Pull requests
+- Discussions
+- Actions
+- Projects
+- Security and quality
+- Insights
+- Files Expand file tree
+- main
+- Breadcrumbs
+- gsd-2
+- / README.md
+- Copy path
+- Blame
+- More file actions
+- Blame
+- More file actions
+- Latest commit
+- History
+- History
+- History
+- 873 lines (644 loc) · 61.8 KB
+- main
+- Breadcrumbs
+- gsd-2
+- / README.md
+- Top
+- File metadata and controls
+- Preview
+- Code
+- Blame
+- 873 lines (644 loc) · 61.8 KB
+- Raw
+- Copy raw file
+- Download raw file
+- Outline Edit and raw actions
+- GSD 2
+- The evolution of Get Shit Done — now a real coding agent.
+- The original GSD went viral as a prompt framework for Claude Code. It worked, but it was fighting the tool — injecting prompts through slash commands, hoping the LLM would follow instructions, with no actual control over context windows, sessions, or execution.
+- This version is different. GSD is now a standalone CLI built on the Pi SDK , which gives it direct TypeScript access to the agent harness itself. That means GSD can actually do what v1 could only ask the LLM to do: clear context between tasks, inject exactly the right files at dispatch time, manage git branches, track cost and tokens, detect stuck loops, recover from crashes, and auto-advance through an entire milestone without human intervention.
+- One command. Walk away. Come back to a built project with clean git history.
+- npm install -g gsd-pi@latest
+- GSD now provisions a managed RTK binary on supported macOS, Linux, and Windows installs to compress shell-command output in bash , async_bash , bg_shell , and verification flows. GSD forces RTK_TELEMETRY_DISABLED=1 for all managed invocations. Set GSD_RTK_DISABLED=1 to disable the integration.
+- 📋 NOTICE: New to Node on Mac? If you installed Node.js via Homebrew, you may be running a development release instead of LTS. Read this guide to pin Node 24 LTS and avoid compatibility issues.
+- What's New in v2.78
+- Worktree Lifecycle & Forensics
+- Slice-cadence worktree collapse (issue 4765) — new git.collapse_cadence: "milestone" | "slice" preference. With slice , each validated slice squash-merges to main immediately, shrinking the orphan window from milestone-size to slice-size. Pair with git.milestone_resquash: true to collapse per-slice commits into one milestone commit at completion.
+- Worktree telemetry (issue 4764) — new journal events ( worktree-created , worktree-merged , worktree-orphaned , auto-exit , canonical-root-redirect , slice-merged , milestone-resquash ) and a summarizeWorktreeTelemetry aggregator that reports orphan breakdowns, merge durations, conflict counts, exit reasons, and unmerged-exit metrics.
+- /gsd forensics worktree section — surfaces the telemetry above with two new anomalies: worktree-orphan and worktree-unmerged-exit .
+- Worktree-aware canonical milestone root (issue 4761) — resolveCanonicalMilestoneRoot routes validators and cross-session readers through the live worktree, so milestone validation no longer silently reads stale project-root state.
+- Bootstrap orphan audit (issue 4762) — in-progress milestones with commits ahead of main no longer get skipped; the audit emits a warning with commit count and worktree location so interrupted auto-runs are visible.
+- Auto Pipeline & Component System
+- Unified component system — skills, agents, pipelines, and marketplace are now one component model wired through runtime, dispatch, and telemetry, replacing per-surface plumbing.
+- UnitContextManifest v2 (issue 4924, issue 4934) — auto dispatch runs through a typed manifest with declarative tools-policy and typed computed artifacts. CI guards the schema so drift fails fast.
+- Composer migration phase 3 (issue 4782) — complete-slice , research-milestone , run-uat , and reassess-roadmap now build context through the manifest composer for a consistent shape across units.
+- Milestone scope classifier + pipeline variants (issue 4781) — auto picks a pipeline variant from milestone shape, so research-heavy and execution-heavy milestones no longer share a one-size dispatch path.
+- Per-unit-type skill manifest resolver (issue 4779) — skills wire into specific unit types instead of being globally on, with manifests expanded across the remaining types.
+- Single-writer-v3 control plane — closes outstanding gaps in the durable-state writer model so concurrent writers can't desync workflow state.
+- Opt-in reassess-roadmap (issue 4778) — gated behind the skip_clean_reassess preference per ADR-003 §4; auto no longer triggers reassessment unprompted.
+- Extensions Framework
+- Extension lifecycle commands — gsd extensions install / update / uninstall / list / info / validate for npm, git, and local sources, with dependency warnings and user-metadata tracking.
+- Topological extension load order — Kahn's-algorithm sort with surfaced ExtensionLoadWarning s, so dependent extensions resolve deterministically and misconfigurations are visible instead of silent.
+- cmux ↔ gsd decoupling — static cross-imports replaced with a shared cmux-events contract and dynamic imports, isolating extension boundaries.
+- Extracted @gsd-extensions/google-search workspace — first reference extension carved out of core; legacy in-tree source replaced with a deprecation stub.
+- Models, Agent, and UX
+- GPT-5.5 Codex support — added across gsd and pi-ai , including xhigh thinking level for custom GPT-5.5 models.
+- Auth mode in /model — providers display alongside auth mode for clearer routing.
+- Permission granularity picker — Claude Code "Always Allow" prompts let you scope the grant instead of approving the broad case.
+- Headless auto default → bypassPermissions (issue 4657) — Claude Code CLI headless auto-mode runs without permission prompts by default.
+- skillFilter for system prompts — pi-coding-agent filters which skills are surfaced in buildSystemPrompt , with consumer exceptions guarded.
+- Visual postinstall (issue 4641) — install shows a spinner/banner UX so first-run state is legible.
+- PR-risk verification — risk prompt emits a copy-pasteable code block to make follow-up commands one step.
+- Reliability & Safety
+- Major git-safety pass — clarified TOCTOU ancestry guard, atomic sync-lock acquire with PID-verified stale override, .git/index.lock force-removal gated by 5-min age, GIT_DIR / GIT_WORK_TREE / GIT_INDEX_FILE stripped from env overlays, rebase/cherry-pick/revert state detected and aborted in recovery, working tree stashed before reset --hard in self-heal/rollback, worktree create guarded against unborn branches, and user hooks + commit.gpgsign honored on auto-commits.
+- Atomic .gsd/ state writes — file-locks now actually lock and throw on contention; appends are lock-wrapped to prevent interleaved writes.
+- Compaction correctness (issue 4665) — fixed chunker/truncation mismatch and silent chunk-drops that produced degenerate or empty summaries.
+- Write-gate (issue 4950) — fail-closed depth confirmation, EXDEV-safe snapshot rename, opt-out persistence default, off-by-one max-attempts fix, exception capture in gate.execute , and audit/DB rows for unknown gate ids.
+- Auto state machine — deterministic policy errors classified non-retriable (issue 4973), depth-verification bypass for non-interactive sessions, baseline restored between units (issue 4961), restoreToolBaseline gated by isAutoMode (issue 4966).
+- Slice + crash recovery — slice orchestrator state persists across crashes; ancestry-guarded force-reset, detached-HEAD refusal, and stash-by-ref recovery.
+- Empty-turn recovery — Claude Code CLI tool-block shape canonicalized so empty-turn recovery matches real provider output.
+- See the full Changelog for details on every release.
+- v2.77 highlights
+- Context Mode — dispatch builds task-ready context automatically (artifacts, prior session, milestone/slice signals, execution metadata); enabled by default for new projects
+- Sandboxed execution tools — gsd_exec_search , gsd_resume , and sandboxed tool-output paths for context-mode flows
+- Memory architecture (ADR-013) — memories table is now authoritative; structured_fields adds typed metadata; dual-write migration landed with decisions backfill
+- Skill coverage — 9 gap-closing skills landed plus 6 planning/design skills surfaced
+- Hook stack — Layer 0 shell hooks and additional Layer 2 lifecycle events
+- TUI polish — dedicated chat-frame style for skill invocations; active-row overflow fixes
+- Worktree + dispatch resilience — crash-recovery dispatch hardened, safer path derivation, improved worktree context fallback
+- DB/schema guardrails — migration/index ordering and schema version stamping tightened
+- Preflight hardening — milestone completion enforces stricter clean-root checks with auto-stash
+- v2.75 highlights
+- Knowledge graph system — structured knowledge graph built from project artifacts
+- /gsd extract-learnings — extracts decisions, lessons, patterns, and surprises into LEARNINGS.md
+- Unified Orchestration Kernel (UOK) — now the default execution path with plan-v2 compile gates and reactive/parallel scheduling
+- GSD Extension API — third-party extensions loadable from .gsd/extensions/ (issue 3338)
+- v1 command parity — 12 missing commands added, closing the migration gap
+- Chat frame redesign — unified styling for compaction notices, tool cards, and chat frame with timestamps and model headers
+- Single-writer DB invariant — engine database enforces single-writer to prevent corruption
+- MCP worktree routing — tool writes routed to active worktree; worktree paths accepted in project root guard
+- Alibaba DashScope — added as a standalone provider (issue 3891)
+- Persistent language preference — /gsd language
+- v2.74 highlights
+- DB-authoritative milestone completeness — milestone completion state is derived from the database, not file markers (issue 4179)
+- Flat-rate provider detection — extended to custom and externalCli providers
+- Thinking level as effort — Claude Code passes thinking level as an effort parameter
+- False milestone merge prevention — auto-mode no longer falsely merges after a complete-milestone failure (issue 4175)
+- Premature auto-stop fix — prevents auto-mode from stopping early on blocked phase + missing reassessment
+- Inline tool call rendering — assistant tool calls render inline with text instead of grouped at the end
+- Custom model preservation — custom model selection preserved on /gsd auto bootstrap (issue 4122)
+- v2.73 highlights
+- Alibaba DashScope provider — added as a standalone provider (issue 3891)
+- Layered depth enforcement — discuss phase enforces depth gates for thorough requirements gathering (issue 4079)
+- Memory pressure watchdog — stuck detection state persisted across sessions (issue 3708)
+- Ollama cloud auth — cloud auth support and real context window resolution via /api/show (issue 4017)
+- DB corruption prevention — direct writes to gsd.db blocked via hooks (issue 3674)
+- Circular dependency cleanup — 3 circular dependencies broken in extension modules (issue 3730)
+- Subagent permissions — GSD subagents default to bypassPermissions with safe built-ins pre-authorized
+- Security hardening — auth middleware activated, shutdown/update routes hardened (issue 4023)
+- Stale slice reconciliation — stale slice rows reconciled and STATE.md rebuilt before DB close (issue 3658)
+- Subagent model preference — subagent_model preference wired through to dispatch prompt builders
+- Pipeline integrity — 5 pipeline issues addressed from release audit, package-lock.json regenerated during bumps
+- v2.72 highlights
+- 8 specialist subagents — new specialist subagents and slim pro agents with GSD phase guard to prevent conflicts
+- Model selection hardening — unconfigured models blocked from selection, provider readiness required, session override honored
+- Auto-mode resilience — credential cooldown recovery with bounded retry budget, fire-and-forget auto start, scoped forensics
+- TUI overhaul — overlays, keyboard shortcuts, and notification flows redesigned for consistency
+- Capability-aware routing (ADR-004) — full implementation of capability scoring, before_model_select hook, and task metadata extraction
+- Multi-model provider strategy (ADR-005) — infrastructure for multi-provider model selection wired into live paths
+- Anti-fabrication guardrails — discuss prompts enforce turn-taking to prevent fabricated user responses
+- Windows portability — hardened cross-platform portability across runtime, tooling, and CI
+- MCP reliability — every registered tool exposed, SDK subpath resolution fixed, abort signals threaded through
+- Tool cache control — cache_control breakpoints added to tool definitions for improved prompt caching
+- v2.71 highlights
+- Secure credential collection over MCP — secure_env_collect tool uses MCP form elicitation to collect secrets without exposing values in tool output
+- MCP stream ordering — tool output renders in correct order, fixing interleaved output in Claude Code and other MCP clients
+- isError flag propagation — workflow tool execution failures correctly return isError: true
+- Multi-round discuss questions — new-project discuss phase supports multi-round questioning with structured question gates
+- TOCTOU file locking — race conditions in event log and custom workflow graph file locking fixed with atomic lock acquisition
+- State derive refactor — deriveStateFromDb god function extracted into composable, testable helpers
+- Pinned output fixes — restored above editor during tool execution, cleared on turn completion
+- v2.70 and earlier
+- Full workflow over MCP (v2.68) — slice replanning, milestone management, slice completion, task completion, and core planning tools exposed over MCP
+- Transport-gated MCP (v2.68) — workflow tool availability adapts to provider transport capabilities automatically
+- Contextual tips system (v2.68) — TUI and web terminal surface contextual tips based on workflow state
+- Ask user questions over MCP (v2.70) — interactive questions exposed via elicitation for external integrations
+- Tiered Context Injection (M005) — relevance-scoped context with 65%+ token reduction
+- 5-wave state machine hardening — critical data integrity fixes across atomic writes, event log reconciliation, session recovery
+- Slice-level parallelism — dependency-aware parallel dispatch within a milestone
+- MCP server — 6 read-only project state tools for external integrations, auto-wrapup guard, and question dedup
+- Ollama extension — first-class local LLM support via Ollama, with dynamic routing enabled by default
+- VS Code sidebar redesign — SCM provider, checkpoints, diagnostics panel, activity feed, workflow controls, session forking
+- Skills overhaul — 30+ skill packs covering major frameworks, databases, and cloud platforms
+- Single-writer state engine — disciplined state transitions with machine guards and TOCTOU hardening
+- DB-backed planning tools — atomic SQLite tool calls for state transitions
+- Declarative workflow engine — YAML workflows through auto-loop
+- Doctor: worktree lifecycle checks — validates worktree health, detects orphans, consolidates cleanup
+- Documentation
+- Full documentation is in the docs/ directory:
+- User Guides
+- Getting Started — install, first run, basic usage
+- Auto Mode — autonomous execution deep-dive
+- Configuration — all preferences, models, git, and hooks
+- Custom Models — add custom providers (Ollama, vLLM, LM Studio, proxies)
+- Token Optimization — profiles, context compression, complexity routing
+- Cost Management — budgets, tracking, projections
+- Git Strategy — worktree isolation, branching, merge behavior
+- Parallel Orchestration — run multiple milestones simultaneously
+- Working in Teams — unique IDs, shared artifacts
+- Skills — bundled skills, discovery, custom authoring
+- Commands Reference — all commands and keyboard shortcuts
+- Troubleshooting — common issues, doctor, forensics, recovery
+- Visualizer — workflow visualizer with stats and discussion status
+- Remote Questions — route decisions to Slack or Discord when human input is needed
+- Dynamic Model Routing — complexity-based model selection and budget pressure
+- Web Interface — browser-based project management and real-time progress
+- Migration from v1 — .planning → .gsd migration
+- Docker Sandbox — run GSD auto mode in an isolated Docker container
+- Developer Docs
+- Architecture — system design and dispatch pipeline
+- CI/CD Pipeline — three-stage promotion pipeline (Dev → Test → Prod)
+- Pipeline Simplification (ADR-003) — merged research into planning, mechanical completion
+- VS Code Extension — chat participant, sidebar dashboard, RPC integration
+- What Changed From v1
+- The original GSD was a collection of markdown prompts installed into ~/.claude/commands/ . It relied entirely on the LLM reading those prompts and doing the right thing. That worked surprisingly well — but it had hard limits:
+- No context control. The LLM accumulated garbage over a long session. Quality degraded.
+- No real automation. "Auto mode" was the LLM calling itself in a loop, burning context on orchestration overhead.
+- No crash recovery. If the session died mid-task, you started over.
+- No observability. No cost tracking, no progress dashboard, no stuck detection.
+- GSD v2 solves all of these because it's not a prompt framework anymore — it's a TypeScript application that controls the agent session.
+- v1 (Prompt Framework)
+- v2 (Agent Application)
+- Runtime
+- Claude Code slash commands
+- Standalone CLI via Pi SDK
+- Context management
+- Hope the LLM doesn't fill up
+- Fresh session per task, programmatic
+- Auto mode
+- LLM
+- [Content truncated for analysis.]

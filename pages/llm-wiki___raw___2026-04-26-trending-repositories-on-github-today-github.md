@@ -1,0 +1,1255 @@
+knowledge-layer:: raw
+source-url:: https://github.com/trending
+collected:: 2026-04-26
+published:: Unknown
+
+- Source: https://github.com/trending
+- Collected: 2026-04-26
+- Published: Unknown
+- Trending repositories on GitHub today · GitHub
+- Skip to content
+- Navigation Menu
+- Toggle navigation
+- Sign in
+- Appearance settings
+- Platform AI CODE CREATION GitHub Copilot Write better code with AI
+- GitHub Spark Build and deploy intelligent apps
+- GitHub Models Manage and compare prompts
+- MCP Registry New Integrate external tools
+- DEVELOPER WORKFLOWS Actions Automate any workflow
+- Codespaces Instant dev environments
+- Issues Plan and track work
+- Code Review Manage code changes
+- APPLICATION SECURITY GitHub Advanced Security Find and fix vulnerabilities
+- Code security Secure your code as you build
+- Secret protection Stop leaks before they start
+- EXPLORE Why GitHub
+- Documentation
+- Blog
+- Changelog
+- Marketplace
+- View all features
+- Solutions BY COMPANY SIZE Enterprises
+- Small and medium teams
+- Startups
+- Nonprofits
+- BY USE CASE App Modernization
+- DevSecOps
+- DevOps
+- CI/CD
+- View all use cases
+- BY INDUSTRY Healthcare
+- Financial services
+- Manufacturing
+- Government
+- View all industries
+- View all solutions
+- Resources EXPLORE BY TOPIC AI
+- Software Development
+- DevOps
+- Security
+- View all topics
+- EXPLORE BY TYPE Customer stories
+- Events & webinars
+- Ebooks & reports
+- Business insights
+- GitHub Skills
+- SUPPORT & SERVICES Documentation
+- Customer support
+- Community forum
+- Trust center
+- Partners
+- View all resources
+- Open Source COMMUNITY GitHub Sponsors Fund open source developers
+- PROGRAMS Security Lab
+- Maintainer Community
+- Accelerator
+- GitHub Stars
+- Archive Program
+- REPOSITORIES Topics
+- Trending
+- Collections
+- Enterprise ENTERPRISE SOLUTIONS Enterprise platform AI-powered developer platform
+- AVAILABLE ADD-ONS GitHub Advanced Security Enterprise-grade security features
+- Copilot for Business Enterprise-grade AI features
+- Premium Support Enterprise-grade 24/7 support
+- Pricing
+- Search or jump to...
+- Search code, repositories, users, issues, pull requests...
+- Search
+- Clear
+- Search syntax tips
+- Provide feedback
+- We read every piece of feedback, and take your input very seriously.
+- Include my email address so I can be contacted
+- Cancel
+- Submit feedback
+- Saved searches
+- Use saved searches to filter your results more quickly
+- Name
+- Query
+- To see all available qualifiers, see our documentation .
+- Cancel
+- Create saved search
+- Sign in
+- Sign up
+- Appearance settings
+- Resetting focus
+- You signed in with another tab or window. Reload to refresh your session.
+- You signed out in another tab or window. Reload to refresh your session.
+- You switched accounts on another tab or window. Reload to refresh your session.
+- Dismiss alert
+- {{ message }}
+- Explore
+- Topics
+- Trending
+- Collections
+- Events
+- GitHub Sponsors
+- Trending
+- See what the GitHub community is most excited about today.
+- Repositories
+- Developers
+- Spoken Language:
+- Any
+- Select a spoken language
+- Abkhazian
+- Afar
+- Afrikaans
+- Akan
+- Albanian
+- Amharic
+- Arabic
+- Aragonese
+- Armenian
+- Assamese
+- Avaric
+- Avestan
+- Aymara
+- Azerbaijani
+- Bambara
+- Bashkir
+- Basque
+- Belarusian
+- Bengali
+- Bihari languages
+- Bislama
+- Bosnian
+- Breton
+- Bulgarian
+- Burmese
+- Catalan, Valencian
+- Chamorro
+- Chechen
+- Chichewa, Chewa, Nyanja
+- Chinese
+- Chuvash
+- Cornish
+- Corsican
+- Cree
+- Croatian
+- Czech
+- Danish
+- Divehi, Dhivehi, Maldivian
+- Dutch, Flemish
+- Dzongkha
+- English
+- Esperanto
+- Estonian
+- Ewe
+- Faroese
+- Fijian
+- Finnish
+- French
+- Fulah
+- Galician
+- Georgian
+- German
+- Greek, Modern
+- Guarani
+- Gujarati
+- Haitian, Haitian Creole
+- Hausa
+- Hebrew
+- Herero
+- Hindi
+- Hiri Motu
+- Hungarian
+- Interlingua (International Auxil...
+- Indonesian
+- Interlingue, Occidental
+- Irish
+- Igbo
+- Inupiaq
+- Ido
+- Icelandic
+- Italian
+- Inuktitut
+- Japanese
+- Javanese
+- Kalaallisut, Greenlandic
+- Kannada
+- Kanuri
+- Kashmiri
+- Kazakh
+- Central Khmer
+- Kikuyu, Gikuyu
+- Kinyarwanda
+- Kirghiz, Kyrgyz
+- Komi
+- Kongo
+- Korean
+- Kurdish
+- Kuanyama, Kwanyama
+- Latin
+- Luxembourgish, Letzeburgesch
+- Ganda
+- Limburgan, Limburger, Limburgish
+- Lingala
+- Lao
+- Lithuanian
+- Luba-Katanga
+- Latvian
+- Manx
+- Macedonian
+- Malagasy
+- Malay
+- Malayalam
+- Maltese
+- Maori
+- Marathi
+- Marshallese
+- Mongolian
+- Nauru
+- Navajo, Navaho
+- North Ndebele
+- Nepali
+- Ndonga
+- Norwegian Bokmål
+- Norwegian Nynorsk
+- Norwegian
+- Sichuan Yi, Nuosu
+- South Ndebele
+- Occitan
+- Ojibwa
+- Church Slavic, Old Slavonic, Chu...
+- Oromo
+- Oriya
+- Ossetian, Ossetic
+- Punjabi, Panjabi
+- Pali
+- Persian
+- Polish
+- Pashto, Pushto
+- Portuguese
+- Quechua
+- Romansh
+- Rundi
+- Romanian, Moldavian, Moldovan
+- Russian
+- Sanskrit
+- Sardinian
+- Sindhi
+- Northern Sami
+- Samoan
+- Sango
+- Serbian
+- Gaelic, Scottish Gaelic
+- Shona
+- Sinhala, Sinhalese
+- Slovak
+- Slovenian
+- Somali
+- Southern Sotho
+- Spanish, Castilian
+- Sundanese
+- Swahili
+- Swati
+- Swedish
+- Tamil
+- Telugu
+- Tajik
+- Thai
+- Tigrinya
+- Tibetan
+- Turkmen
+- Tagalog
+- Tswana
+- Tonga (Tonga Islands)
+- Turkish
+- Tsonga
+- Tatar
+- Twi
+- Tahitian
+- Uighur, Uyghur
+- Ukrainian
+- Urdu
+- Uzbek
+- Venda
+- Vietnamese
+- Volapük
+- Walloon
+- Welsh
+- Wolof
+- Western Frisian
+- Xhosa
+- Yiddish
+- Yoruba
+- Zhuang, Chuang
+- Zulu
+- Loading
+- Language:
+- Any
+- Select a language
+- Unknown languages
+- 1C Enterprise
+- 2-Dimensional Array
+- 4D
+- ABAP
+- ABAP CDS
+- ABNF
+- ActionScript
+- Ada
+- Adblock Filter List
+- Adobe Font Metrics
+- Agda
+- AGS Script
+- AIDL
+- Aiken
+- AL
+- ALGOL
+- Alloy
+- Alpine Abuild
+- Altium Designer
+- AMPL
+- AngelScript
+- Answer Set Programming
+- Ant Build System
+- Antlers
+- ANTLR
+- ApacheConf
+- Apex
+- API Blueprint
+- APL
+- Apollo Guidance Computer
+- AppleScript
+- Arc
+- AsciiDoc
+- ASL
+- ASN.1
+- Classic ASP
+- ASP.NET
+- AspectJ
+- Assembly
+- Astro
+- Asymptote
+- ATS
+- Augeas
+- AutoHotkey
+- AutoIt
+- Avro IDL
+- Awk
+- B (Formal Method)
+- B4X
+- Ballerina
+- BASIC
+- Batchfile
+- Beef
+- Befunge
+- Berry
+- BibTeX
+- BibTeX Style
+- Bicep
+- Bikeshed
+- Bison
+- BitBake
+- Blade
+- BlitzBasic
+- BlitzMax
+- Bluespec
+- Bluespec BH
+- Boo
+- Boogie
+- BQN
+- Brainfuck
+- BrighterScript
+- Brightscript
+- Zeek
+- Browserslist
+- Bru
+- BuildStream
+- C
+- C#
+- C++
+- C-ObjDump
+- C2hs Haskell
+- C3
+- Cabal Config
+- Caddyfile
+- Cadence
+- Cairo
+- Cairo Zero
+- CameLIGO
+- Cangjie
+- CAP CDS
+- Cap'n Proto
+- Carbon
+- CartoCSS
+- Ceylon
+- Chapel
+- Charity
+- Checksums
+- ChucK
+- CIL
+- Circom
+- Cirru
+- Clarion
+- Clarity
+- Classic ASP
+- Clean
+- Click
+- CLIPS
+- Clojure
+- Closure Templates
+- Cloud Firestore Security Rules
+- Clue
+- CMake
+- COBOL
+- CODEOWNERS
+- CodeQL
+- CoffeeScript
+- ColdFusion
+- ColdFusion CFC
+- COLLADA
+- Common Lisp
+- Common Workflow Language
+- Component Pascal
+- CoNLL-U
+- Cooklang
+- Cool
+- Rocq Prover
+- Cpp-ObjDump
+- CQL
+- Creole
+- crontab
+- Crystal
+- CSON
+- Csound
+- Csound Document
+- Csound Score
+- CSS
+- CSV
+- Cuda
+- CUE
+- Cue Sheet
+- cURL Config
+- Curry
+- CWeb
+- Cycript
+- Cylc
+- Cypher
+- Cython
+- D
+- D-ObjDump
+- D2
+- Dafny
+- Darcs Patch
+- Dart
+- Daslang
+- DataWeave
+- Debian Package Control File
+- DenizenScript
+- desktop
+- Dhall
+- Diff
+- DIGITAL Command Language
+- dircolors
+- DirectX 3D File
+- DM
+- DNS Zone
+- Dockerfile
+- Dogescript
+- Dotenv
+- DTrace
+- Dune
+- Dylan
+- E
+- E-mail
+- Eagle
+- Earthly
+- Easybuild
+- EBNF
+- eC
+- Ecere Projects
+- ECL
+- ECLiPSe
+- Ecmarkup
+- Edge
+- EdgeQL
+- EditorConfig
+- Edje Data Collection
+- edn
+- Eiffel
+- EJS
+- Elixir
+- Elm
+- Elvish
+- Elvish Transcript
+- Emacs Lisp
+- EmberScript
+- E-mail
+- EQ
+- Erlang
+- Euphoria
+- F#
+- F*
+- Factor
+- Fancy
+- Fantom
+- Faust
+- Fennel
+- FIGlet Font
+- Filebench WML
+- Filterscript
+- FIRRTL
+- fish
+- Flix
+- Fluent
+- FLUX
+- Formatted
+- Forth
+- Fortran
+- Fortran Free Form
+- FreeBASIC
+- FreeMarker
+- Frege
+- Futhark
+- G-code
+- Game Maker Language
+- GAML
+- GAMS
+- GAP
+- GCC Machine Description
+- GDB
+- GDScript
+- GDShader
+- GEDCOM
+- Gemfile.lock
+- Gemini
+- Genero 4gl
+- Genero per
+- Genie
+- Genshi
+- Gentoo Ebuild
+- Gentoo Eclass
+- Gerber Image
+- Gettext Catalog
+- Gherkin
+- Git Attributes
+- Git Commit
+- Git Config
+- Git Revision List
+- Gleam
+- Glimmer JS
+- Glimmer TS
+- GLSL
+- Glyph
+- Glyph Bitmap Distribution Format
+- GN
+- Gnuplot
+- Go
+- Go Checksums
+- Go Module
+- Go Template
+- Go Workspace
+- Godot Resource
+- Golo
+- Gosu
+- Grace
+- Gradle
+- Gradle Kotlin DSL
+- Grammatical Framework
+- Graph Modeling Language
+- GraphQL
+- Graphviz (DOT)
+- Groovy
+- Groovy Server Pages
+- GSC
+- Hack
+- Haml
+- Handlebars
+- HAProxy
+- Harbour
+- Hare
+- Haskell
+- Haxe
+- HCL
+- HIP
+- HiveQL
+- HLSL
+- HOCON
+- HolyC
+- hoon
+- Hosts File
+- HTML
+- Jinja
+- HTML+ECR
+- HTML+EEX
+- HTML+ERB
+- HTML+PHP
+- HTML+Razor
+- HTTP
+- Hurl
+- HXML
+- Hy
+- HyPhy
+- iCalendar
+- IDL
+- Idris
+- Ignore List
+- IGOR Pro
+- ImageJ Macro
+- Imba
+- Inform 7
+- INI
+- Ink
+- Inno Setup
+- Io
+- Ioke
+- IRC log
+- Isabelle
+- Isabelle ROOT
+- ISPC
+- J
+- Jac
+- Jai
+- Janet
+- JAR Manifest
+- Jasmin
+- Java
+- Java Properties
+- Java Server Pages
+- Java Template Engine
+- JavaScript
+- JavaScript+ERB
+- JCL
+- Jest Snapshot
+- JetBrains MPS
+- JFlex
+- Jinja
+- Jison
+- Jison Lex
+- Jolie
+- jq
+- JSON
+- JSON with Comments
+- JSON5
+- JSONiq
+- JSONLD
+- Jsonnet
+- Julia
+- Julia REPL
+- Jupyter Notebook
+- Just
+- Kaitai Struct
+- KakouneScript
+- KCL
+- KDL
+- KerboScript
+- KFramework
+- KiCad Layout
+- KiCad Legacy Layout
+- KiCad Schematic
+- Kickstart
+- Kit
+- Koka
+- KoLmafia ASH
+- Kotlin
+- KRL
+- Kusto
+- kvlang
+- LabVIEW
+- Lambdapi
+- Langium
+- Lark
+- Lasso
+- Latte
+- Lean
+- Lean 4
+- Leo
+- Less
+- Lex
+- LFE
+- LigoLANG
+- LilyPond
+- Limbo
+- Linear Programming
+- Linker Script
+- Linux Kernel Module
+- Liquid
+- Liquidsoap
+- Literate Agda
+- Literate CoffeeScript
+- Literate Haskell
+- LiveCode Script
+- LiveScript
+- LLVM
+- Logos
+- Logtalk
+- LOLCODE
+- LookML
+- LoomScript
+- LSL
+- LTspice Symbol
+- Lua
+- Luau
+- M
+- M3U
+- M4
+- M4Sugar
+- Macaulay2
+- Makefile
+- Mako
+- Markdown
+- Marko
+- Mask
+- Wolfram Language
+- Mathematical Programming System
+- MATLAB
+- Maven POM
+- Max
+- MAXScript
+- mcfunction
+- mdsvex
+- MDX
+- Wikitext
+- Mercury
+- Mermaid
+- Meson
+- Metal
+- MeTTa
+- Microsoft Developer Studio Project
+- Microsoft Visual Studio Solution
+- MiniD
+- MiniYAML
+- MiniZinc
+- MiniZinc Data
+- Mint
+- Mirah
+- mIRC Script
+- MLIR
+- Modelica
+- Modula-2
+- Modula-3
+- Module Management System
+- Mojo
+- Monkey
+- Monkey C
+- Moocode
+- MoonBit
+- MoonScript
+- Motoko
+- Motorola 68K Assembly
+- Move
+- MQL4
+- MQL5
+- MTML
+- MUF
+- mupad
+- Muse
+- Mustache
+- Myghty
+- nanorc
+- Nasal
+- NASL
+- NCL
+- Nearley
+- Nemerle
+- NEON
+- nesC
+- NetLinx
+- NetLinx+ERB
+- NetLogo
+- NewLisp
+- Nextflow
+- Nginx
+- Nickel
+- Nim
+- Ninja
+- Nit
+- Nix
+- NL
+- NMODL
+- Noir
+- NPM Config
+- NSIS
+- Nu
+- NumPy
+- Nunjucks
+- Nushell
+- NWScript
+- OASv2-json
+- OASv2-yaml
+- OASv3-json
+- OASv3-yaml
+- Oberon
+- ObjDump
+- Object Data Instance Notation
+- Objective-C
+- Objective-C++
+- Objective-J
+- ObjectScript
+- OCaml
+- Odin
+- Omgrofl
+- OMNeT++ MSG
+- OMNeT++ NED
+- OMNeT++ MSG
+- OMNeT++ NED
+- ooc
+- Opa
+- Opal
+- Open Policy Agent
+- OpenAPI Specification v2
+- OpenAPI Specification v3
+- OpenCL
+- OpenEdge ABL
+- OpenQASM
+- OpenRC runscript
+- OpenSCAD
+- OpenStep Property List
+- OpenType Feature File
+- Option List
+- Org
+- OverpassQL
+- Ox
+- Oxygene
+- Oz
+- P4
+- Pact
+- Pan
+- Papyrus
+- Parrot
+- Parrot Assembly
+- Parrot Internal Representation
+- Pascal
+- Pawn
+- PDDL
+- PEG.js
+- Pep8
+- Perl
+- PHP
+- Pic
+- Pickle
+- PicoLisp
+- PigLatin
+- Pike
+- Pip Requirements
+- Pkl
+- PlantUML
+- PLpgSQL
+- PLSQL
+- Pod
+- Pod 6
+- PogoScript
+- Polar
+- Pony
+- Portugol
+- PostCSS
+- PostScript
+- POV-Ray SDL
+- PowerBuilder
+- PowerShell
+- Praat
+- Prisma
+- Processing
+- Procfile
+- Proguard
+- Prolog
+- Promela
+- Propeller Spin
+- Protocol Buffer
+- Protocol Buffer Text Format
+- Public Key
+- Pug
+- Puppet
+- Pure Data
+- PureBasic
+- PureScript
+- Pyret
+- Python
+- Python console
+- Python traceback
+- q
+- Q#
+- QMake
+- QML
+- Qt Script
+- Quake
+- QuakeC
+- QuickBASIC
+- R
+- Racket
+- Ragel
+- Raku
+- RAML
+- Rascal
+- RAScript
+- Raw token data
+- RBS
+- RDoc
+- Readline Config
+- REALbasic
+- Reason
+- ReasonLIGO
+- Rebol
+- Record Jar
+- Red
+- Redcode
+- Redirect Rules
+- Regular Expression
+- Ren'Py
+- RenderScript
+- ReScript
+- reStructuredText
+- REXX
+- Rez
+- Rich Text Format
+- Ring
+- Riot
+- RMarkdown
+- RobotFramework
+- robots.txt
+- Roc
+- Rocq Prover
+- Roff
+- Roff Manpage
+- RON
+- ROS Interface
+- Rouge
+- RouterOS Script
+- RPC
+- RPGLE
+- RPM Spec
+- Ruby
+- RUNOFF
+- Rust
+- Sage
+- Sail
+- SaltStack
+- SAS
+- Sass
+- Scala
+- Scaml
+- Scenic
+- Scheme
+- Scilab
+- SCSS
+- sed
+- Self
+- SELinux Policy
+- ShaderLab
+- Shell
+- ShellCheck Config
+- ShellSession
+- Shen
+- Sieve
+- Simple File Verification
+- Singularity
+- Slang
+- Slash
+- Slice
+- Slim
+- Slint
+- Smali
+- Smalltalk
+- Smarty
+- Smithy
+- SmPL
+- SMT
+- Snakemake
+- Solidity
+- Soong
+- SourcePawn
+- SPARQL
+- Spline Font Database
+- SQF
+- SQL
+- SQLPL
+- Squirrel
+- SRecode Template
+- SSH Config
+- Stan
+- Standard ML
+- STAR
+- Starlark
+- Stata
+- STL
+- STON
+- StringTemplate
+- Stylus
+- SubRip Text
+- SugarSS
+- SuperCollider
+- SurrealQL
+- Survex data
+- Svelte
+- SVG
+- Sway
+- Sweave
+- Swift
+- SWIG
+- SystemVerilog
+- Tact
+- Talon
+- Tcl
+- Tcsh
+- Tea
+- Teal
+- templ
+- Terra
+- Terraform Template
+- TeX
+- Texinfo
+- Text
+- TextGrid
+- Textile
+- TextMate Properties
+- Thrift
+- TI Program
+- TL-Verilog
+- TLA
+- TMDL
+- Toit
+- TOML
+- Tor Config
+- Tree-sitter Query
+- TSPLIB data
+- TSQL
+- TSV
+- TSX
+- Turing
+- Turtle
+- Twig
+- TXL
+- Type Language
+- TypeScript
+- TypeSpec
+- Typst
+- Unified Parallel C
+- Unity3D Asset
+- Unix Assembly
+- Uno
+- UnrealScript
+- Untyped Plutus Core
+- UrWeb
+- V
+- Vala
+- Valve Data Format
+- VBA
+- VBScript
+- vCard
+- VCL
+- Velocity Template Language
+- Vento
+- Verilog
+- VHDL
+- Vim Help File
+- Vim Script
+- Vim Snippet
+- Visual Basic .NET
+- Visual Basic .NET
+- Visual Basic 6.0
+- Volt
+- Vue
+- Vyper
+- Wavefront Material
+- Wavefront Object
+- WDL
+- Web Ontology Language
+- WebAssembly
+- WebAssembly Interface Type
+- WebIDL
+- WebVTT
+- Wget Config
+- WGSL
+- Whiley
+- Wikitext
+- Win32 Message File
+- Windows Registry Entries
+- wisp
+- Witcher Script
+- Wolfram Language
+- Wollok
+- World of Warcraft Addon Data
+- Wren
+- X BitMap
+- X Font Directory Index
+- X PixMap
+- X10
+- xBase
+- XC
+- XCompose
+- Xmake
+- XML
+- XML Property List
+- Xojo
+- Xonsh
+- XPages
+- XProc
+- XQuery
+- XS
+- XSLT
+- Xtend
+- Yacc
+- YAML
+- YANG
+- YARA
+- YASnippet
+- Yul
+- ZAP
+- Zeek
+- ZenScript
+- Zephir
+- Zig
+- ZIL
+- Zimpl
+- Zmodel
+- Loading
+- Date range:
+- Today
+- Adjust time span
+- Today
+- This week
+- This month
+- Star
+- Alishahryar1 /
+- free-claude-code
+- Use claude-code for free in the terminal, VSCode extension or via discord like openclaw
+- Python
+- 11,538
+- 1,727
+- Built by
+- 4,007 stars today
+- Sponsor
+- Star
+- mattpocock /
+- skills
+- My personal directory of skills, straight from my .claude directory.
+- Shell
+- 20,147
+- 1,676
+- Built by
+- 1,139 stars today
+- Star
+- Z4nzu /
+- hackingtool
+- ALL IN ONE Hacking Tool For Hackers
+- Python
+- 63,932
+- 7,164
+- Built by
+- 1,200 stars today
+- Star
+- PostHog /
+- posthog
+- 🦔 PostHog is an all-in-one developer platform for building successful products. We offer product analytics, web analytics, session replay, error tracking, feature flags, experimentation, surveys, data warehouse, a CDP, and an AI product assistant to help debug your code, ship features faster, and keep all your usage and customer data in one stack.
+- Python
+- 33,507
+- 2,606
+- Built by
+- 471 stars today
+- Star
+- davila7 /
+- claude-code-templates
+- CLI tool for configuring and monitoring Claude Code
+- Python
+- 25,366
+- 2,529
+- Built by
+- 87 stars today
+- Star
+- deepseek-ai /
+- DeepEP
+- DeepEP: an efficient expert-parallel communication library
+- Cuda
+- 9,499
+- 1,197
+- Built by
+- 189 stars today
+- Star
+- PowerShell /
+- PowerShell
+- PowerShell for every system!
+- C#
+- 53,078
+- 8,298
+- Built by
+- 48 stars today
+- Star
+- RooCodeInc /
+- Roo-Code
+- Roo Code gives you a whole dev team of AI agents in your code editor.
+- TypeScript
+- 23,516
+- 3,124
+- Built by
+- 57 stars today
+- Star
+- huggingface /
+- ml-intern
+- 🤗 ml-intern: an open-source ML engineer that reads papers, trains models, and ships ML models
+- Python
+- 6,261
+- 566
+- Built by
+- 1,240 stars today
+- Star
+- codecrafters-io /
+- build-your-own-x
+- Master programming by recreating your favorite technologies from scratch.
+- Markdown
+- 496,017
+- 47,012
+- Built by
+- 1,432 stars today
+- Star
+- CJackHwang /
+- ds2api
+- Deepseek to API: A lightweight, high-performance full-stack middleware converting client protocols to universal APIs. Supports multi-account rotation, compiled binaries, Vercel Serverless, and Docker. Compatible with Google, Claude, and OpenAI API formats.
+- Go
+- 1,422
+- 459
+- Built by
+- 44 stars today
+- Star
+- Universal-Commerce-Protocol /
+- ucp
+- Specification and documentation for the Universal Commerce Protocol (UCP)
+- Python
+- 2,796
+- 350
+- Built by
+- 26 stars today
+- Star
+- ComposioHQ /
+- awesome-codex-skills
+- A curated list of practical Codex skills for automating workflows across the Codex CLI and API.
+- Python
+- 1,500
+- 134
+- Built by
+- 188 stars today
+- Footer
+- &copy; 2026 GitHub, Inc.
+- Footer navigation
+- Terms
+- Privacy
+- Security
+- Status
+- Community
+- Docs
+- Contact
+- Manage cookies
+- Do not share my personal information
+- You can’t perform that action at this time.

@@ -381,6 +381,9 @@ function uiText(settings = currentSettings()) {
     knowledgeChatTitle: zh ? "对话知识库" : "Knowledge Chat",
     send: zh ? "发送" : "Send",
     savedSearchContext: zh ? "已将上一轮搜索内容整理并保存到本地知识库。" : "The previous search context has been organized and saved to the local knowledge base.",
+    savedSearchContextFallback: zh
+      ? "LLM 未返回可用整理结果，已改为保存上一轮搜索上下文。"
+      : "The LLM did not return a usable compilation, so the previous search context was saved instead.",
     toggleLanguage: zh ? "切换设置语言" : "Switch language",
     userRole: zh ? "你" : "You",
   };
@@ -1185,11 +1188,9 @@ async function answerKnowledgeQuestion(
 async function saveLastSearchContext(settings: PluginSettings) {
   if (!lastChatSearchContext || (!lastChatSearchContext.localSnippets.length && !lastChatSearchContext.mcpResults.length)) {
     await logseq.UI.showMsg(uiText(settings).noPreviousSearchContext, "warning");
-    return;
+    return "empty" as const;
   }
 
-  const llmConfig = resolveLlmConfig(settings);
-  validateLlmConfig(llmConfig);
   const sourceUrl = `llm-wiki://chat-search/${todayIso()}/${encodeURIComponent(lastChatSearchContext.question.slice(0, 80))}`;
   const rawText = [
     `Question: ${lastChatSearchContext.question}`,
@@ -1204,22 +1205,82 @@ async function saveLastSearchContext(settings: PluginSettings) {
     }),
   ].join("\n\n");
 
-  const requestBody = buildSearchSaveRequest({
-    model: llmConfig.model,
-    question: lastChatSearchContext.question,
-    localSnippets: lastChatSearchContext.localSnippets,
-    mcpResults: lastChatSearchContext.mcpResults,
-    primaryLanguage: settings.primaryLanguage,
-  });
-  const response = await requestJson(llmConfig.endpoint, llmConfig.apiKey, requestBody);
   currentDownloadedPage = {
     url: sourceUrl,
     title: `Chat search: ${lastChatSearchContext.question}`,
     text: rawText,
   };
-  const preview = await buildWikiPreview(extractChatContent(response), sourceUrl, settings);
-  await applyWikiPreview(preview);
-  currentDownloadedPage = null;
+
+  let preview: WikiChangePreview;
+  let saveResult: "llm" | "fallback" = "llm";
+  try {
+    const llmConfig = resolveLlmConfig(settings);
+    validateLlmConfig(llmConfig);
+    const requestBody = buildSearchSaveRequest({
+      model: llmConfig.model,
+      question: lastChatSearchContext.question,
+      localSnippets: lastChatSearchContext.localSnippets,
+      mcpResults: lastChatSearchContext.mcpResults,
+      primaryLanguage: settings.primaryLanguage,
+    });
+    const response = await requestJson(llmConfig.endpoint, llmConfig.apiKey, requestBody);
+    preview = await buildWikiPreview(extractChatContent(response), sourceUrl, settings);
+  } catch (error) {
+    console.warn("LLM Wiki /save compilation failed; saving fallback context.", error);
+    preview = await buildSearchContextFallbackPreview(lastChatSearchContext, sourceUrl, settings);
+    saveResult = "fallback";
+  }
+
+  try {
+    await applyWikiPreview(preview);
+    return saveResult;
+  } finally {
+    currentDownloadedPage = null;
+  }
+}
+
+async function buildSearchContextFallbackPreview(
+  context: NonNullable<typeof lastChatSearchContext>,
+  sourceUrl: string,
+  settings: PluginSettings,
+): Promise<WikiChangePreview> {
+  const text = uiText(settings);
+  const titlePrefix = settings.primaryLanguage === "zh" ? "搜索上下文" : "Search Context";
+  const title = `${titlePrefix}: ${context.question.slice(0, 48)}`;
+  const pageName = pageTitleToWikiPage(title, settings);
+  const localLines = context.localSnippets.length
+    ? context.localSnippets.map((snippet) => `- [[${snippet.pageName}]]\n  - ${limitText(snippet.content, 700).replace(/\n/g, "\n  - ")}`)
+    : [settings.primaryLanguage === "zh" ? "- 无本地知识库片段" : "- No local knowledge snippets"];
+  const mcpLines = context.mcpResults.length
+    ? context.mcpResults.map((result) => {
+        const url = result.url ? `\n  - URL: ${result.url}` : "";
+        return `- ${result.serviceName}: ${result.title}${url}\n  - ${limitText(result.content, 700).replace(/\n/g, "\n  - ")}`;
+      })
+    : [settings.primaryLanguage === "zh" ? "- 无 MCP 搜索结果" : "- No MCP search results"];
+  const content =
+    settings.primaryLanguage === "zh"
+      ? [`## 问题`, context.question, "", "## 本地知识库片段", ...localLines, "", "## MCP 搜索结果", ...mcpLines].join("\n")
+      : [`## Question`, context.question, "", "## Local Knowledge Snippets", ...localLines, "", "## MCP Search Results", ...mcpLines].join("\n");
+  const existing = await logseq.Editor.getPage(pageName);
+
+  return {
+    sourceUrl,
+    sourceTitle: title,
+    rawPageName: rawPageName({ title }),
+    topic: titlePrefix,
+    changes: [
+      {
+        title,
+        pageName,
+        action: existing ? "update" : "create",
+        topic: titlePrefix,
+        summary: text.savedSearchContextFallback,
+        reason: text.savedSearchContextFallback,
+        content,
+        seeAlso: context.localSnippets.map((snippet) => snippet.pageName),
+      },
+    ],
+  };
 }
 
 async function askKnowledgeBaseFromDialog() {
@@ -1236,8 +1297,13 @@ async function askKnowledgeBaseFromDialog() {
     currentChatTurns.push({ role: "user", content: question });
     renderMainUi(chatDialogTemplate(currentChatTurns, true));
     try {
-      await saveLastSearchContext(settings);
-      currentChatTurns.push({ role: "assistant", content: text.savedSearchContext });
+      const saveResult = await saveLastSearchContext(settings);
+      if (saveResult !== "empty") {
+        currentChatTurns.push({
+          role: "assistant",
+          content: saveResult === "fallback" ? text.savedSearchContextFallback : text.savedSearchContext,
+        });
+      }
       renderMainUi(chatDialogTemplate(currentChatTurns));
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);

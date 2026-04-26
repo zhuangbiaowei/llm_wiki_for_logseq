@@ -82,7 +82,15 @@ function parseLine(rawLine: string): ParsedLine | null {
 }
 
 function normalizeBlockContent(content: string): string {
-  return content.trim().replace(/\s+$/g, "");
+  return escapeNumericIssueTags(content.trim().replace(/\s+$/g, ""));
+}
+
+function escapeNumericIssueTags(content: string): string {
+  return content.replace(/(^|[^\p{L}\p{N}_/-])#(\d{2,})(?=$|[\s),.;:!?，。；：！？])/gu, (match, prefix: string, issue: string, offset: number) => {
+    const before = content.slice(Math.max(0, offset - 6), offset + prefix.length);
+    if (/issue\s$/i.test(before)) return `${prefix}${issue}`;
+    return `${prefix}issue ${issue}`;
+  });
 }
 
 function lineToBlock(content: string): BatchBlock {
